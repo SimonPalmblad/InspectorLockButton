@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cff524be83ab1b04ebdcd82c72b847a4, type: 3}
+  m_Name: BardClass
+  m_EditorClassIdentifier: 
+  m_EditingLocked: 0
+  Class: 0
+  Health: 123123
+  MoveSpeed: 444
+  Arms: 5
+  Teeth: 8
+  ItemSlots: 5
+  StartingItem: {fileID: 11400000, guid: 3b9718af18911f945afa42c83559bf0f, type: 2}

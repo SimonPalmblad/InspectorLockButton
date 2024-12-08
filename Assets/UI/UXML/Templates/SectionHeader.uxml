@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="SectionHeader" style="flex-grow: 1;">
+        <ui:Label tabindex="-1" text="Attributes" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SectionLabel" class="header" />
+        <ui:VisualElement name="SectionDivider" class="header-divider" style="flex-grow: 1;" />
+    </ui:VisualElement>
+</ui:UXML>
