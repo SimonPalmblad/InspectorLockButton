@@ -143,10 +143,10 @@ public partial class EditorLock : VisualElement
         List<VisualElement> readOnlyElements = GetElementsOfReferenceType(this, VisualElementReadOnly.ValidTypes);
         List<VisualElement> childElements = GetChildElements(this, ignoreLockButton: true);
 
-        foreach (VisualElement elem in readOnlyElements)
-        {
-            elem.GetType().GetProperty("isReadOnly").SetValue(elem, m_EditorLockedProp.boolValue, null);
-        }
+        //foreach (VisualElement elem in readOnlyElements)
+        //{
+        //    elem.GetType().GetProperty("isReadOnly").SetValue(elem, m_EditorLockedProp.boolValue, null);
+        //}
 
         // For some reason this logic is working backwards. Probably my stupid ass not braining.s
         // It's supposed to set picking mode to ignore when locked = true.
@@ -154,10 +154,13 @@ public partial class EditorLock : VisualElement
         {
             if (m_EditorLockedProp.boolValue)
             {
+                elem.SetEnabled(false);
                 elem.pickingMode = PickingMode.Position;
                 continue;
             }
-            
+
+            elem.SetEnabled(true);
+
             elem.pickingMode = PickingMode.Ignore;          
         }
 

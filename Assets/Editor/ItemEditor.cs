@@ -44,7 +44,7 @@ public class ItemEditor : Editor
         
         root.Q<EditorLock>().Init(serializedObject, m_EditorLockedProp);
 
-        m_PreviousButton.RegisterCallback<ClickEvent>(PreviousSelection);
+        //m_PreviousButton.RegisterCallback<ClickEvent>(PreviousSelection);
 
         m_ItemNameElem.text = (m_ItemNameProp.stringValue).ToUpper() + " (item)";
 

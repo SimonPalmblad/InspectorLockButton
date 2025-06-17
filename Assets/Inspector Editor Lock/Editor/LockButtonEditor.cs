@@ -27,6 +27,5 @@ public class LockButtonEditor : Editor
         EditorLockUtility.InitializeLocks(root, serializedObject, m_EditorLockedProps);
 
         return root;
-
     }
 }

@@ -369,7 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6023ec42981db14e8985fcd794789d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EditorLocks: 0100000100
+  m_EditorLocks: 00
 --- !u!4 &1407202611
 Transform:
   m_ObjectHideFlags: 0
@@ -482,15 +482,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8887e56bdc7be6c4e80b4f26de54dc98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Health: 10
-  m_MoveSpeed: 2
-  m_Arms: 1
-  m_Teeth: 25
-  m_ItemSlots: 10
+  m_Health: 123123
+  m_MoveSpeed: 444
+  m_Arms: 5
+  m_Teeth: 8
+  m_ItemSlots: 5
   m_SliderValue: 0
-  m_Class: 2
-  m_ClassStats: {fileID: 11400000, guid: 625d734517b5b1b4c9451dd641456967, type: 2}
-  m_StartingIem: {fileID: 11400000, guid: 5897d9ccd541d7042bffba331cb77c23, type: 2}
+  m_Class: 0
+  m_ClassStats: {fileID: 11400000, guid: c42792434e25b994ba6ea0a5bd358fd3, type: 2}
+  m_StartingIem: {fileID: 11400000, guid: 3b9718af18911f945afa42c83559bf0f, type: 2}
   m_ClassDatabase: {fileID: 11400000, guid: 28aa0cf4e6f3d984e9ce94d75dae9382, type: 2}
 --- !u!4 &2135559699
 Transform:

@@ -18,7 +18,6 @@ namespace EditorLockUtilies
                 if (_lock is EditorLock)
                 {
                     editorLocks.Add((EditorLock)_lock);
-
                 }
             }
 
@@ -30,13 +29,14 @@ namespace EditorLockUtilies
 
             for (int i = 0; i < serializedArrayProp.arraySize; i++)
             {
-                editorLocks[i].GetType()
-                    .GetMethod("Init")
-                    .Invoke(editorLocks[i], new object[]
-                    {
-                            serializedObject,
-                            serializedArrayProp.GetArrayElementAtIndex(i)
-                    });
+                editorLocks[i].Init(serializedObject, serializedArrayProp.GetArrayElementAtIndex(i));
+                //editorLocks[i].GetType()
+                //    .GetMethod("Init")
+                //    .Invoke(editorLocks[i], new object[]
+                //    {
+                //            serializedObject,
+                //            serializedArrayProp.GetArrayElementAtIndex(i)
+                //    });
             }
         }
     }

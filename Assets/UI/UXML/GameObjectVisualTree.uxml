@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:Template name="ItemVisualTree" src="project://database/Assets/UI/UXML/ItemVisualTree.uxml?fileID=9197481963319205126&amp;guid=21bf21f0d41fd5a42bc493680e902754&amp;type=3#ItemVisualTree" />
     <Style src="project://database/Assets/UI/USS/PlayerInspectorStyle.uss?fileID=7433441132597879392&amp;guid=28bcfc21e25ee3f4aa697560d92f21e0&amp;type=3#PlayerInspectorStyle" />
     <ui:TabView view-data-key="PlayerInspectorStyle" enabled="true">
         <ui:Tab label="Player Stats&#10;" name="StatsTab">
@@ -14,10 +15,10 @@
                         <ui:IntegerField label="Teeth" value="42" name="TeethField" binding-path="m_Teeth" picking-mode="Ignore" readonly="true" style="margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:VisualElement name="DebugElement" class="section-debug" style="flex-grow: 1; transition-property: all, flex-grow; transition-duration: 0s, 1s; transition-timing-function: ease, ease; transition-delay: 0s, 0s; display: flex; width: 35%;">
+                <ui:VisualElement name="DebugElement" class="section-debug" style="flex-grow: 1; transition-property: all, flex-grow; transition-duration: 0s, 1s; transition-timing-function: ease, ease; transition-delay: 0s, 0s; display: flex; width: 35%; margin-bottom: 0;">
                     <ui:Label tabindex="-1" text="Debug" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Header" class="header" style="overflow: visible; display: flex;" />
                     <ui:VisualElement name="Divider" class="header-divider" style="flex-grow: 1; -unity-background-scale-mode: stretch-to-fill;" />
-                    <ui:Button text="Randomize Health" parse-escape-sequences="false" display-tooltip-when-elided="true" name="Debug_1" class="button" style="flex-wrap: wrap; text-overflow: clip; flex-grow: 1; -unity-font-style: bold; -unity-text-align: middle-center; white-space: normal; rotate: 0;" />
+                    <ui:Button text="Randomize Health" parse-escape-sequences="false" display-tooltip-when-elided="true" name="Debug_1" style="flex-wrap: wrap; text-overflow: clip; flex-grow: 1; -unity-font-style: bold; -unity-text-align: middle-center; white-space: normal; rotate: 0;" />
                     <ui:Button text="Debug 2" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Debug_2" class="button" style="flex-grow: 1;" />
                 </ui:VisualElement>
             </ui:VisualElement>
@@ -28,11 +29,23 @@
                 </ui:VisualElement>
                 <ui:IntegerField label="Item slots" value="42" name="ItemSlots" binding-path="m_ItemSlots" picking-mode="Ignore" readonly="true" class="element read-only" />
                 <ui:Foldout text="Show Items" view-data-key="InventoryFoldout" enabled="true" class="element foldout">
-                    <ui:VisualElement data-source="project://database/Assets/UI/UXML/ItemVisualTree.uxml?fileID=9197481963319205126&amp;guid=21bf21f0d41fd5a42bc493680e902754&amp;type=3#ItemVisualTree" name="Item" enabled="false" class="element" style="flex-grow: 1; width: 30%;">
-                        <ui:VisualElement name="InventoryIcon" style="flex-grow: 1; -unity-background-scale-mode: scale-to-fit;" />
-                        <ui:TextField placeholder-text="filler text" name="ItemName" />
-                        <ui:IntegerField value="0" name="ItemValue" />
-                    </ui:VisualElement>
+                    <ui:GroupBox name="Items">
+                        <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                            <ui:Instance template="ItemVisualTree" />
+                            <ui:Instance template="ItemVisualTree" />
+                            <ui:Instance template="ItemVisualTree" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                            <ui:Instance template="ItemVisualTree" />
+                            <ui:Instance template="ItemVisualTree" />
+                            <ui:Instance template="ItemVisualTree" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                            <ui:Instance template="ItemVisualTree" />
+                            <ui:Instance template="ItemVisualTree" />
+                            <ui:Instance template="ItemVisualTree" />
+                        </ui:VisualElement>
+                    </ui:GroupBox>
                 </ui:Foldout>
             </ui:VisualElement>
             <ui:VisualElement name="Pane_3" class="section" style="flex-grow: 1; width: auto;">
