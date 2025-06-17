@@ -30,6 +30,8 @@ namespace EditorLockUtilies
             return serializedObject.FindProperty(editorLockable.LockablePropertyPath);
         }
 
+      
+
         /// <summary>
         /// Initialize all Editor Locks on a VisualElement.
         /// </summary>

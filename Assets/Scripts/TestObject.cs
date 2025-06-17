@@ -8,6 +8,5 @@ public class TestObject : MonoBehaviour, IEditorLockable
     
     [SerializeField]
     public bool[] m_EditorLockStates;
-
     public string LockablePropertyPath => nameof(m_EditorLockStates);
 }

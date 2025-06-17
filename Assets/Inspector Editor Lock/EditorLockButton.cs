@@ -80,7 +80,6 @@ public partial class EditorLock : VisualElement
         m_serializedObject = serializedObj;
         m_EditorLockedProp = editorLockedProperty;
         ToggleLockEvents();
-        InitializeStyle();
     }
 
     public void ButtonClicked(ClickEvent evt)
@@ -97,13 +96,8 @@ public partial class EditorLock : VisualElement
 
     public void ToggleLockEvents()
     {
-        if(m_LockTargetElements == null)
-        {
-            m_LockTargetElements = this.Q<VisualElement>();
-        }
-
         ToggleButtonIcon();
-        ToggleLockedStyle(m_LockTargetElements);
+        ToggleLockedStyle(this.Q<VisualElement>());
         ToggleLockedElements();
 
         m_serializedObject.ApplyModifiedProperties();
@@ -151,40 +145,32 @@ public partial class EditorLock : VisualElement
 
     private void ToggleLockedElements()
     {
-        List<VisualElement> readOnlyElements = GetElementsOfReferenceType(this, VisualElementReadOnly.ValidTypes);
-        List<VisualElement> childElements = GetChildElements(this, ignoreLockButton: true);
+        List<VisualElement> childElements = new List<VisualElement> ();      
 
-        //foreach (VisualElement elem in readOnlyElements)
-        //{
-        //    elem.GetType().GetProperty("isReadOnly").SetValue(elem, m_EditorLockedProp.boolValue, null);
-        //}
+        // Exit early if no valid children are found
+        if(!TryGetChildElements(this, out childElements))
+        {
+            return;
+        }
 
-        // For some reason this logic is working backwards. Probably my stupid ass not braining.s
-        // It's supposed to set picking mode to ignore when locked = true.
+        var disabled = m_EditorLockedProp.boolValue;
+
         foreach (VisualElement elem in childElements)
         {
             // Disable
-            if (m_EditorLockedProp.boolValue)
+            if (disabled)
             {
-                Debug.Log($"Disabled element: {elem.name}");
-
                 elem.SetEnabled(false);
-                //elem.pickingMode = PickingMode.Position;
                 continue;
             }
 
-            // enable
-            elem.SetEnabled(true);
-            Debug.Log($"Enabled element: {elem.name}");
-            //elem.pickingMode = PickingMode.Ignore;          
+            elem.SetEnabled(true);       
         }
-
     }
 
     public List<VisualElement> GetElementsOfReferenceType(VisualElement elem, Type[] referenceTypes)
     {
         var results = new List<VisualElement>();
-
 
         if (referenceTypes.Contains(elem.GetType())){
             results.Add(elem);
@@ -201,30 +187,34 @@ public partial class EditorLock : VisualElement
     }
 
 
-    public List<VisualElement> GetChildElements(VisualElement elem, bool ignoreLockButton = true)
+    public bool TryGetChildElements(VisualElement elem, out List<VisualElement> childElements)
     {
         var results = new List<VisualElement>();
 
         if (elem.childCount > 0)
         {
+            //Debug.Log($"Found {elem.childCount} children.");
             foreach (VisualElement child in elem.Children())
             {
-                // Not very optimized
+                // Not very optimized using Linq
                 if(child.name == elementsToIgnore.Find(x => child.name == x))
                 {
                     continue;
                 }
 
-                results.AddRange(GetChildElements(child, ignoreLockButton));
+                results.Add(child);
             }
         }
 
+        // No valid children found
         else
         {
-            results.Add(elem);
+            childElements = results;
+            return false;
         }
 
-        return results;
+        childElements = results;
+        return true;
     }
 
     private void ToggleButtonIcon()
@@ -232,17 +222,4 @@ public partial class EditorLock : VisualElement
         LockButton.iconImage = m_EditorLockedProp.boolValue ? LockButton.iconImage = m_LockedIcon
                                                         : LockButton.iconImage = m_UnlockedIcon;
     }
-
-    private void InitializeStyle()
-    {
-        if (m_LockTargetElements == null)
-        {
-            m_LockTargetElements = this.Q<VisualElement>(/*elementToLock*/);
-        }
-
-        this.style.marginTop = topMargin;
-
-        //m_LockTargetElements.style.backgroundColor = 
-    }
-
 }
