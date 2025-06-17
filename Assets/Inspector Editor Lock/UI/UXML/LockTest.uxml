@@ -1,11 +1,8 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <EditorLock>
-        <engine:VisualElement name="Stats" style="flex-grow: 1;">
-            <engine:VisualElement name="IntegerField" style="flex-grow: 1;">
-                <engine:IntegerField label="Integer Field" value="42" style="justify-content: flex-start;" />
-            </engine:VisualElement>
-            <engine:TextField label="Text Field" placeholder-text="filler text" />
-            <engine:FloatField label="Float Field" value="42.2" />
-        </engine:VisualElement>
+    <EditorLock name="DropDownLock" top-margin="6">
+        <engine:DropdownField label="Dropdown" />
+    </EditorLock>
+    <EditorLock top-margin="12" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+        <engine:Button text="Button" />
     </EditorLock>
 </engine:UXML>

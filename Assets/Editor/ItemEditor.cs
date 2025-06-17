@@ -22,10 +22,8 @@ public class ItemEditor : Editor
 
     private Action<SerializedProperty> updateItemIcon;
 
-
     private void OnEnable()
     {
-
         m_InventoryIconProp = serializedObject.FindProperty("m_InventoryIcon");
         m_ItemNameProp = serializedObject.FindProperty("m_Name");
         m_EditorLockedProp = serializedObject.FindProperty("m_EditorLocked");

@@ -16,15 +16,33 @@ public class LockButtonEditor : Editor
 
     private void OnEnable()
     {
+        if(VisualTree == null)
+        {
+            Debug.Log($"No Visual Tree Asset present on {target.name}. Could not create custom Inspector with Editor Locks.");
+            return;
+        }
+
+        // find the bool that controls lock states
         m_EditorLockedProps = serializedObject.FindProperty(nameof(LockButtonTest.m_EditorLocks));
     }
 
     public override VisualElement CreateInspectorGUI()
     {
         VisualElement root = new VisualElement();
-        VisualTree.CloneTree(root);
 
-        EditorLockUtility.InitializeLocks(root, serializedObject, m_EditorLockedProps);
+        if (VisualTree == null)
+        {
+            Debug.Log($"Drawing default GUI for {target.name}.");
+            base.CreateInspectorGUI();
+        }
+
+        else
+        {
+            VisualTree.CloneTree(root);
+
+            // create an array of bools requal to the number of locks attached to this UI element
+            EditorLockUtility.InitializeLocks(root, serializedObject, m_EditorLockedProps);
+        }
 
         return root;
     }

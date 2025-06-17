@@ -22,21 +22,22 @@ public static class LockTargetStyle
     public static float DisabledBorderWidth = 2f;
     public static float BorderRadius = 6f;
 
-    public static float ElementPadding = 4f;
-    
+    public static float ElementPadding = 4f;    
 }
 
 [UxmlElement]
 public partial class EditorLock : VisualElement
 {
     private SerializedProperty m_EditorLockedProp;
-
     private SerializedObject m_serializedObject;
-    private string m_ButtonElemName = "LockElem";
 
+    private string m_LockElemName = "LockElem";
+    private string m_LockButtonName = "LockButton";
 
-    private Texture2D lockedIcon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Inspector Editor Lock/UI/Icons/locked.png");
-    private Texture2D unlockedIcon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Inspector Editor Lock/UI/Icons/unlocked.png");
+    private List<string> elementsToIgnore;
+
+    private Texture2D m_LockedIcon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Inspector Editor Lock/UI/Icons/locked.png");
+    private Texture2D m_UnlockedIcon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Inspector Editor Lock/UI/Icons/unlocked.png");
 
     public EditorLock() 
     { 
@@ -44,13 +45,14 @@ public partial class EditorLock : VisualElement
     }
 
     [UxmlAttribute]
-    public string elementToLock { get; set; }
-    
+    public float topMargin { get; set; } = 9f;
+
     [UxmlAttribute]
     public VisualTreeAsset visualTree;
 
     protected VisualElement m_LockTargetElements;
-    public Button m_Button => this.Q<Button>("LockButton");
+    
+    public Button LockButton => this.Q<Button>(m_LockButtonName);
     
 
     private void Init()
@@ -60,10 +62,19 @@ public partial class EditorLock : VisualElement
             visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Inspector Editor Lock/UI/UXML/EditorLockButton.uxml");
         }
 
+        elementsToIgnore = new List<string>() {m_LockElemName, m_LockButtonName};
+
         visualTree.CloneTree(this);
-        m_Button.RegisterCallback<ClickEvent>(ButtonClicked);
+        this.style.marginTop = topMargin;
+        LockButton.RegisterCallback<ClickEvent>(ButtonClicked);
     }
 
+
+    /// <summary>
+    /// Initialize an Editor Lock with values that allows the lock state to be stored.
+    /// </summary>
+    /// <param name="serializedObj">The object that has this lock attached to it.</param>
+    /// <param name="editorLockedProperty">A bool on the object that stores this lock's state.</param>
     public void Init(SerializedObject serializedObj, SerializedProperty editorLockedProperty)
     {
         m_serializedObject = serializedObj;
@@ -88,13 +99,13 @@ public partial class EditorLock : VisualElement
     {
         if(m_LockTargetElements == null)
         {
-            m_LockTargetElements = this.Q<VisualElement>(elementToLock);
+            m_LockTargetElements = this.Q<VisualElement>();
         }
 
         ToggleButtonIcon();
         ToggleLockedStyle(m_LockTargetElements);
         ToggleLockedElements();
-        
+
         m_serializedObject.ApplyModifiedProperties();
     }
 
@@ -135,7 +146,7 @@ public partial class EditorLock : VisualElement
         visualElement.style.borderTopRightRadius = 0f;
         #endregion
 
-        m_Button.style.backgroundColor = borderColor;
+        LockButton.style.backgroundColor = borderColor;
     }
 
     private void ToggleLockedElements()
@@ -152,16 +163,20 @@ public partial class EditorLock : VisualElement
         // It's supposed to set picking mode to ignore when locked = true.
         foreach (VisualElement elem in childElements)
         {
+            // Disable
             if (m_EditorLockedProp.boolValue)
             {
+                Debug.Log($"Disabled element: {elem.name}");
+
                 elem.SetEnabled(false);
-                elem.pickingMode = PickingMode.Position;
+                //elem.pickingMode = PickingMode.Position;
                 continue;
             }
 
+            // enable
             elem.SetEnabled(true);
-
-            elem.pickingMode = PickingMode.Ignore;          
+            Debug.Log($"Enabled element: {elem.name}");
+            //elem.pickingMode = PickingMode.Ignore;          
         }
 
     }
@@ -194,7 +209,8 @@ public partial class EditorLock : VisualElement
         {
             foreach (VisualElement child in elem.Children())
             {
-                if(child.name == m_ButtonElemName)
+                // Not very optimized
+                if(child.name == elementsToIgnore.Find(x => child.name == x))
                 {
                     continue;
                 }
@@ -213,16 +229,18 @@ public partial class EditorLock : VisualElement
 
     private void ToggleButtonIcon()
     {
-        m_Button.iconImage = m_EditorLockedProp.boolValue ? m_Button.iconImage = lockedIcon
-                                                        : m_Button.iconImage = unlockedIcon;
+        LockButton.iconImage = m_EditorLockedProp.boolValue ? LockButton.iconImage = m_LockedIcon
+                                                        : LockButton.iconImage = m_UnlockedIcon;
     }
 
     private void InitializeStyle()
     {
         if (m_LockTargetElements == null)
         {
-            m_LockTargetElements = this.Q<VisualElement>(elementToLock);
+            m_LockTargetElements = this.Q<VisualElement>(/*elementToLock*/);
         }
+
+        this.style.marginTop = topMargin;
 
         //m_LockTargetElements.style.backgroundColor = 
     }
