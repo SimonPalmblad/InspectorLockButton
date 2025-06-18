@@ -1,0 +1,23 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Inspector%20Editor%20Lock/UI/USS/CreateAssetWindow.uss?fileID=7433441132597879392&amp;guid=df823d17dd4001a4e9ecdd1afad93e3b&amp;type=3#CreateAssetWindow" />
+    <engine:VisualElement name="Options" class="lockable-spacing" style="flex-grow: 1;">
+        <engine:VisualElement name="PathElem" enabled="false" class="lockable-spacing-internal" style="flex-grow: 1; flex-direction: row; min-width: 20px; height: auto; max-height: 20px; max-width: none; min-height: 20px;">
+            <engine:Label text="Path:" style="margin-right: 93px;" />
+            <engine:VisualElement name="PathString" class="unity-base-text-field -unity-base-field unity-text-field" style="flex-grow: 1; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-left-color: rgb(27, 27, 27); border-right-color: rgb(27, 27, 27); border-top-color: rgb(27, 27, 27); border-bottom-color: rgb(27, 27, 27); background-color: rgb(42, 42, 42); border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; padding-top: 2px; padding-right: 3px; padding-bottom: 2px; padding-left: 3px; color: rgb(172, 172, 172);">
+                <engine:Label text="Assets/Scripts" style="background-color: rgba(42, 42, 42, 0); border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-left-width: 0; -unity-text-outline-color: rgba(58, 111, 169, 0);" />
+            </engine:VisualElement>
+            <engine:Button text="Change Path" name="PathButton" />
+        </engine:VisualElement>
+        <engine:Toggle label="Use Default Path&#10;" name="PathToggle" class="lockable-spacing-internal" />
+        <engine:Toggle label="Share Name" value="true" name="NameToggle" class="lockable-spacing-internal" />
+    </engine:VisualElement>
+    <engine:VisualElement name="TextFields" class="lockable-spacing" style="flex-grow: 1; justify-content: flex-start;">
+        <engine:TextField label="Asset Name" placeholder-text="NewLockableObject" name="AssetName" class="lockable-spacing-internal" />
+        <engine:VisualElement name="CopyNameTo" enabled="false" style="flex-grow: 1;">
+            <engine:TextField label="Script Name" placeholder-text="NewLockableObject.cs" name="ScriptName" class="lockable-spacing-internal" />
+            <engine:TextField label="Editor Script Name" placeholder-text="NewLockableObjectEditor.cs" name="EditorName" class="lockable-spacing-internal" />
+            <engine:TextField label="UXML Name" placeholder-text="NewLockableObject.uxml" name="UXMLName" class="lockable-spacing-internal" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+    <engine:Button text="Create Asset" name="CreateButton" class="lockable-spacing" style="max-height: 30px; min-height: 25px; margin-bottom: 10px;" />
+</engine:UXML>
