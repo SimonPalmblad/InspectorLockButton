@@ -5,6 +5,9 @@ using System.Text;
 using UnityEngine.UIElements;
 using System;
 using UnityEditor.VersionControl;
+using Unity.VisualScripting;
+using System.Linq;
+using UnityEngine.Windows;
 
 public class CreateLockableObject : Editor
 {
@@ -23,20 +26,28 @@ public class CreateLockableObject : Editor
 
     public static string FileEnding = ".cs";
 
-    public static void CreateScript(string attributes, string name, string content, string directory, string inheritance = "MonoBehaviour")
+    public static void CreateScript(string attributes, string fileName, string content, string directory, string inheritance = "MonoBehaviour")
     {
         // Sanitize name
-        name = name.Replace(" ", string.Empty);
+        fileName = fileName.Replace(" ", string.Empty);
+        
+        if (!fileName.EndsWith(".cs"))
+        {
+            fileName += FileEnding;
+        }
 
-        var fileName = name + FileEnding;
-
-        string path = string.Join("/", "Assets", directory, fileName);
+        string path = string.Join("/", directory, fileName);
         //Directory.CreateDirectory(Path.GetDirectoryName(path));
 
-        if (File.Exists(path))
+        if (System.IO.File.Exists(path))
         {
             Debug.Log("A file with that name already exists!");
             return;
+        }
+
+        if (!AssetDatabase.IsValidFolder(directory))
+        {
+            CreateDirectories(directory);
         }
 
         #region Runtime script creation
@@ -62,29 +73,23 @@ public class CreateLockableObject : Editor
         outBuilder.AppendLine("using UnityEngine;");
         outBuilder.AppendLine("");
         outBuilder.AppendLine(attributes);
-        outBuilder.AppendLine($"public class {name} : {inheritance}");
+        outBuilder.AppendLine($"public class {fileName} : {inheritance}");
         outBuilder.AppendLine("{");
         outBuilder.AppendLine($"\t{content}");
         outBuilder.AppendLine("}"); 
 
-        Debug.Log(outBuilder.ToString());
+        Debug.Log($"Created script with name '{fileName}' in path '{path}'");
+        Debug.Log($"Content of {outBuilder.ToString()}");
+        Debug.Log("");
+
         #endregion
 
     }
 
-    [MenuItem("EditorLock/New Lockable Script")]
-    public static void CreateLockableScript(/*string name = "", string path =""*/)
+    //[MenuItem("EditorLock/New Lockable Script")]
+
+    public static void CreateLockableScript(string name, string path)
     {
-        //if(name == string.Empty)
-        //{
-        //    name = DefaultName;
-        //}
-
-        //if (path == string.Empty)
-        //{
-        //    path = ScriptsFolder;
-        //}
-
         StringBuilder content = new StringBuilder();
         content.Append("[SerializeField]")
                .AppendLine()
@@ -92,41 +97,42 @@ public class CreateLockableObject : Editor
                .Append("\tpublic string LockablePropertyPath => nameof(m_EditorLockStates);");   
     
 
-        CreateScript("", "NewName", content.ToString(), directory: "path", inheritance: "MonoBehaviour, IEditorLockable");
+        CreateScript("", name, content.ToString(), directory:path, inheritance: "MonoBehaviour, IEditorLockable");
     }
 
-    [MenuItem("EditorLock/New Lockable Editor Script")]
-    public static void CreateLockableEditorScript()
+    //[MenuItem("EditorLock/New Lockable Editor Script")]
+    public static void CreateLockableEditorScript(string name, string path)
     {
         var attributes = "[CustomEditor(typeof(TestObject))]";
         var inheritance = "LockableEditor";
-        CreateScript(attributes, name: "NewLockableEditor", content: string.Empty, directory: EditorFolder, inheritance);
+        CreateScript(attributes, name, content: string.Empty, directory: path, inheritance);
     }
 
-    [MenuItem("EditorLock/New Lockable UXML Document")]
-    public static void CreateLockableUXMLDoc()
+    //[MenuItem("EditorLock/New Lockable UXML Document")]
+    public static void CreateLockableUXMLDoc(string name, string path)
     {
         //VisualTreeAsset visualTree = new VisualTreeAsset();
-        var visualTree = ScriptableObject.CreateInstance(typeof(VisualTreeAsset));
-        var folderDirectory = "Assets/" + UXMLFolder;
-        
+        //var visualTree = ScriptableObject.CreateInstance(typeof(VisualTreeAsset));
+        //var folderDirectory = "Assets/" + UXMLFolder;
+
+        string folderDirectory = path;
+
         #region Test Code
+        
         // Test spoofing
         if (!AssetDatabase.IsValidFolder(folderDirectory))
         {
-            //Create parent folder
-            if (!AssetDatabase.IsValidFolder("Assets/Scripts/UI"))
-            {
-                Debug.Log($"Created Folder at: 'Assets/Scripts' with name 'UI'");
-            }
-
-            string guid = AssetDatabase.CreateFolder($"Assets/{UIFolder}", "UXML");
-            folderDirectory = AssetDatabase.GUIDToAssetPath(guid);
-
-            Debug.Log($"New folder directory created at: '{folderDirectory}'");
+            folderDirectory = CreateDirectories(folderDirectory);
+            //Debug.Log($"New folder directory created at: '{folderDirectory}'");
         }
 
-        Debug.Log($"Created UXML Asset in: 'Assets/Scripts/UI/UXML/LockableUXMLTemplate.uxml'");  
+        //string guid = AssetDatabase.CreateFolder($"Assets/{UIFolder}", "UXML");
+        //folderDirectory = AssetDatabase.GUIDToAssetPath(guid);
+
+        
+
+        Debug.Log($"Created UXML Asset in: '{folderDirectory}/LockableUXMLTemplate.uxml'");
+        Debug.Log("");
 
         #endregion
 
@@ -147,7 +153,7 @@ public class CreateLockableObject : Editor
             folderDirectory = AssetDatabase.GUIDToAssetPath(guid);
             Debug.Log($"New folder directory {folderDirectory}");
         }
-            AssetDatabase.CopyAsset("Assets/Scripts/UI/UXML/LockableUXMLTemplate.uxml", "Assets/Scripts/UI/UXML/CopiedTemplate.uxml");
+            AssetDatabase.CopyAsset("Assets/Inspector Editor Lock/UI/UXML/LockableUXMLTemplate.uxml", "Assets/Scripts/UI/UXML/CopiedTemplate.uxml");
             AssetDatabase.Refresh();
 
         */
@@ -155,16 +161,57 @@ public class CreateLockableObject : Editor
     }
 
     // Add method for attaching the script to this object
-    [MenuItem("EditorLock/New Lockable Asset")]
-    public static void CreateLockableAssetScript()
+    //[MenuItem("EditorLock/New Lockable Asset")]
+    public static void CreateLockableAsset()
     {
-        var name = "New Lockable Asset";
-        
+        CreateLockableAsset(DefaultName);
+    }
+
+    public static void CreateLockableAsset(string name)
+    {
+ 
         //Test
         Debug.Log($"Created GameObject with name: '{name}' ");
-        
+        Debug.Log("");
+
         //Runtime
         //var asset = ObjectFactory.CreateGameObject(name);
+    }
+
+    private static string CreateDirectories(string folderPath, string parentfolder = "Assets")
+    {
+        string[] folders = folderPath.Split("/");
+        
+        if(folders.Count() <= 0)
+        {
+            throw new Exception($"Exception: No valid folders found in string {folderPath}. Make sure to use '/' path separators in your input.");            
+        }
+
+        string path = folders[0];
+
+        for (int i = 0; i < folders.Length; i++)
+        {
+            var currentFolder = folders[i];
+
+            // Sets path if unassigned
+            if (path == string.Empty)
+            {
+                path = currentFolder;
+            }
+
+            // Continue if path is valid and add current directory to path
+            if(AssetDatabase.IsValidFolder(path))
+            {
+                path += "/" + currentFolder;                                   
+                continue;
+            }
+
+            //AssetDatabase.CreateFolder(folderPath, directory);
+            path += "/" + currentFolder;
+            Debug.Log($"Created folder: {currentFolder} in path {path}");
+        }
+
+        return folderPath;
     }
 
 }

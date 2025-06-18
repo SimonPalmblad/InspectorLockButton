@@ -8,7 +8,10 @@
             </engine:VisualElement>
             <engine:Button text="Change Path" name="PathButton" />
         </engine:VisualElement>
-        <engine:Toggle label="Use Default Path&#10;" name="PathToggle" class="lockable-spacing-internal" />
+        <engine:Toggle label="Use Default Path&#10;" name="PathToggle" value="true" class="lockable-spacing-internal" />
+        <engine:VisualElement name="PathToggleRevealElem" enabled="true" class="lockable-spacing-internal" style="flex-grow: 1; flex-direction: row; margin-top: 0; visibility: visible; overflow: visible; display: none;">
+            <engine:Toggle label="↪ Set Individuallly" name="IndividualPathToggle" value="false" class="lockable-spacing-internal" style="align-content: auto; align-self: flex-start;" />
+        </engine:VisualElement>
         <engine:Toggle label="Share Name" value="true" name="NameToggle" class="lockable-spacing-internal" />
     </engine:VisualElement>
     <engine:VisualElement name="TextFields" class="lockable-spacing" style="flex-grow: 1; justify-content: flex-start;">
