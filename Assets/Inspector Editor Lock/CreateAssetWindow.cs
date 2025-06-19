@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -25,18 +25,30 @@ public class CreateAssetWindow : EditorWindow
 {
     [SerializeField]
     private VisualTreeAsset m_VisualTreeAsset = default;
-    private VisualElement m_CopyTextToElem;
+    private VisualElement m_CopyNameToElem;
+    private VisualElement m_MasterContainer;
+    
     private List<TextField> m_UniformNameFields = new List<TextField>();
+    private List<FolderPathSelection> m_FolderPathFields = new List<FolderPathSelection>();
 
     private TextField m_AssetNameField;
+    private TextField m_RootFolderPath;
 
     private Label m_FilePathElement;
+
+    private string m_RootFolderPathName = "RootFolderPath";
+    private string m_ScriptName = "ScriptName";
+    private string m_EditorName = "EditorName";
+    private string m_UXMLName = "UXMLName";
+
+    private string m_ScriptPathName = "ScriptPathSelection";
+    private string m_EditorPathName = "EditorPathSelection";
 
     [MenuItem("EditorLock/Show Window")]
     public static void ShowExample()
     {
         CreateAssetWindow wnd = GetWindow<CreateAssetWindow>();
-        wnd.titleContent = new GUIContent("CreateAssetWindow");
+        wnd.titleContent = new GUIContent("🔒 LockableAsset");
     }
 
     public void CreateGUI()
@@ -52,12 +64,15 @@ public class CreateAssetWindow : EditorWindow
         Toggle pathToggle = root.Q<Toggle>("PathToggle");
         Toggle indvPathToggle = root.Q<Toggle>("IndividualPathToggle");
 
+        m_MasterContainer = root.Q<VisualElement>("MasterContainer");
         m_AssetNameField = root.Q<TextField>("AssetName");
-        m_CopyTextToElem = root.Q<VisualElement>("CopyNameTo");
-        // lazy solution
-        m_FilePathElement = (Label)root.Q<VisualElement>("PathString").Children()
-                                                                      .Where(x => x is Label)
-                                                                      .First();
+        m_CopyNameToElem = root.Q<VisualElement>("CopyNameTo");
+        // lazy solution. Should be set to be a FolderPathSelection
+        m_FilePathElement = (Label)root.Q<VisualElement>("PathTextField").Children()
+                                                                         .Where(x => x is Label)
+                                                                         .First();
+        m_RootFolderPath = root.Q<FolderPathSelection>(m_RootFolderPathName)
+                               .Q<TextField>("PathTextField");
 
         Button createAssetsButton = root.Q<Button>("CreateButton");
         #endregion
@@ -65,28 +80,37 @@ public class CreateAssetWindow : EditorWindow
 
         #region Register Event callbacks for Elements
         nameToggle.RegisterValueChangedCallback(NameToggled);
-        pathToggle.RegisterValueChangedCallback(PathToggled);
+        pathToggle.RegisterValueChangedCallback(DefaultPathToggled);
+        indvPathToggle.RegisterValueChangedCallback(IndividualPathsToggled);
 
         createAssetsButton.RegisterCallback<ClickEvent>(CreateAssets);
 
+        m_RootFolderPath.RegisterCallback<InputEvent>(UpdateAllPathNames);
         m_AssetNameField.RegisterCallback<InputEvent>(UpdateAllNames);
 
         // Register all CopyTextToElement children's events
-        foreach (TextField child in m_CopyTextToElem.Children())
+        foreach (VisualElement child in m_CopyNameToElem.Children())
         {
-            m_UniformNameFields.Add(child);
-
-            if (child.name == "ScriptName" || child.name == "EditorName")
+            if(child is TextField)
             {
-                var scriptData = new TextFieldData(child, ".cs");
-                child.RegisterCallback<FocusOutEvent, TextFieldData>(TextFieldOnFocusedOut, scriptData);
+                var textField = child as TextField;
+                m_UniformNameFields.Add(textField);
 
-                continue;
-            }
+                if (child.name == m_ScriptName || textField.name == m_EditorName)
+                {
+                    var scriptData = new TextFieldData(textField, ".cs");
+                    textField.RegisterCallback<FocusOutEvent, TextFieldData>(TextFieldOnFocusedOut, scriptData);
 
-            var uxlmData = new TextFieldData(child, ".uxml");
-            child.RegisterCallback<FocusOutEvent, TextFieldData>(TextFieldOnFocusedOut, uxlmData);
-        } 
+                    continue;
+                }
+
+                var uxlmData = new TextFieldData(textField, ".uxml");
+                textField.RegisterCallback<FocusOutEvent, TextFieldData>(TextFieldOnFocusedOut, uxlmData);
+             }      
+        }
+
+        m_FolderPathFields = m_MasterContainer.GetChildrenOfType<FolderPathSelection>();
+
         #endregion
     }
 
@@ -112,15 +136,15 @@ public class CreateAssetWindow : EditorWindow
                     editorField = child;
                     break;
             }
-
         }
 
         CreateLockableObject.CreateLockableAsset(PlaceholderIfEmpty(m_AssetNameField));
+       
         CreateLockableObject.CreateLockableScript(PlaceholderIfEmpty(scriptField), m_FilePathElement.text);
+       
         CreateLockableObject.CreateLockableEditorScript(PlaceholderIfEmpty(editorField), m_FilePathElement.text);
-        CreateLockableObject.CreateLockableUXMLDoc(PlaceholderIfEmpty(editorField), m_FilePathElement.text + "/UI" + "/UXML");
-        //Debug.Log("Button Clicked");
-        //CreateNewLockable.CreateLockableScript();
+        
+        CreateLockableObject.CreateLockableUXMLDoc(PlaceholderIfEmpty(uxmlField), m_FilePathElement.text + "/UI" + "/UXML");
     }
 
     private string PlaceholderIfEmpty(TextField textField)
@@ -160,7 +184,7 @@ public class CreateAssetWindow : EditorWindow
             
             elem.value = evt.newData;
             
-            if(elem.name == "ScriptName" || elem.name == "EditorName")
+            if(elem.name == m_ScriptName || elem.name == m_EditorName)
             {
                 elem.value += ".cs";
                 continue;
@@ -170,9 +194,59 @@ public class CreateAssetWindow : EditorWindow
         }
     }
 
+
+    private void UpdateAllPathNames(InputEvent evt)
+    {
+        UpdateAllPathNames(evt.newData); 
+    }
+
+    private void UpdateAllPathNames(string path)
+    {
+        foreach (FolderPathSelection elem in m_FolderPathFields)
+        {
+            // Ignore root path folder
+            if (elem.name == m_RootFolderPathName)
+            {
+                continue;
+            }
+
+            // If field is left empty, restore placeholder text
+            if (path == "")
+            {
+                elem.TextField.value = elem.TextField.textEdition.placeholder;
+                continue;
+            }
+
+            var newPath = path + "/";
+
+            // Script folder
+            if (elem.name == m_ScriptPathName)
+            {
+                elem.TextField.value = newPath + "Scripts";
+                continue;
+            }
+
+            // Editor script folder
+            if (elem.name == m_EditorPathName)
+            {
+                elem.TextField.value = newPath + "Scripts/Editor";
+                continue;
+            }
+
+            //Uxml folder
+            elem.TextField.value = newPath + "Scripts/UI/UXML";
+        }
+    }
+
     private void NameToggled(ChangeEvent<bool> evt)
     {
-        m_CopyTextToElem.SetEnabled(!evt.newValue);
+
+        foreach (TextField textField in m_UniformNameFields)
+        {
+            textField.SetEnabled( !evt.newValue);
+        }
+
+        //m_CopyNameToElem.SetEnabled( !evt.newValue);
 
         if (evt.newValue)
         {
@@ -181,24 +255,40 @@ public class CreateAssetWindow : EditorWindow
         }
 
         m_AssetNameField.UnregisterCallback<InputEvent>(UpdateAllNames);
-
     }
 
 
-    private void PathToggled(ChangeEvent<bool> evt)
+    private void DefaultPathToggled(ChangeEvent<bool> evt)
     {
-        var pathElem = rootVisualElement.Q<VisualElement>("PathElem");
-        var revealElem = rootVisualElement.Q<VisualElement>("PathToggleRevealElem");
+        var pathElem = rootVisualElement.Q<FolderPathSelection>(m_RootFolderPathName);
+        var revealElem = rootVisualElement.Q<Toggle>("IndividualPathToggle");       
 
-        pathElem.SetEnabled(!evt.newValue);
-        // Enable and disable foldout element
-        revealElem.style.display = evt.newValue ? DisplayStyle.None 
-                                                   : DisplayStyle.Flex;
-        
+        pathElem.SetEnabled( !evt.newValue);
+        revealElem.SetEnabled( !evt.newValue);
+
         // Set value of reveal toggle to 'false' if set to use DefaultPath
-        if(evt.newValue == true)
+        if (evt.newValue == true)
         {
-            revealElem.Children().OfType<Toggle>().First().value = false;
+            UpdateAllPathNames(m_RootFolderPath.textEdition.placeholder); // default root folder
+            revealElem.value = false;
+            return;
+        }
+
+        UpdateAllPathNames(m_RootFolderPath.value); // custom root folder
+    }
+
+    private void IndividualPathsToggled(ChangeEvent<bool> evt)
+    {
+
+        foreach (FolderPathSelection folderPath in m_FolderPathFields)
+        {
+            if(folderPath.name == m_RootFolderPathName)
+            {
+                folderPath.SetEnabled( !evt.newValue);
+                continue;
+            }
+
+            folderPath.SetEnabled(evt.newValue);
         }
     }
 

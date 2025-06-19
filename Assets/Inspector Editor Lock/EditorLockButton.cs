@@ -51,8 +51,8 @@ public partial class EditorLock : VisualElement
     public VisualTreeAsset visualTree;
 
     protected VisualElement m_LockTargetElements;
-    
-    public Button LockButton => this.Q<Button>(m_LockButtonName);
+
+    public Button LockButton;
     
 
     private void Init()
@@ -66,6 +66,8 @@ public partial class EditorLock : VisualElement
 
         visualTree.CloneTree(this);
         this.style.marginTop = topMargin;
+
+        LockButton = this.Q<Button>(m_LockButtonName);
         LockButton.RegisterCallback<ClickEvent>(ButtonClicked);
     }
 

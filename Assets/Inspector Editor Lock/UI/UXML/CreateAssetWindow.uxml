@@ -1,26 +1,30 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Assets/Inspector%20Editor%20Lock/UI/USS/CreateAssetWindow.uss?fileID=7433441132597879392&amp;guid=df823d17dd4001a4e9ecdd1afad93e3b&amp;type=3#CreateAssetWindow" />
-    <engine:VisualElement name="Options" class="lockable-spacing" style="flex-grow: 1;">
-        <engine:VisualElement name="PathElem" enabled="false" class="lockable-spacing-internal" style="flex-grow: 1; flex-direction: row; min-width: 20px; height: auto; max-height: 20px; max-width: none; min-height: 20px;">
-            <engine:Label text="Path:" style="margin-right: 93px;" />
-            <engine:VisualElement name="PathString" class="unity-base-text-field -unity-base-field unity-text-field" style="flex-grow: 1; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-left-color: rgb(27, 27, 27); border-right-color: rgb(27, 27, 27); border-top-color: rgb(27, 27, 27); border-bottom-color: rgb(27, 27, 27); background-color: rgb(42, 42, 42); border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; padding-top: 2px; padding-right: 3px; padding-bottom: 2px; padding-left: 3px; color: rgb(172, 172, 172);">
-                <engine:Label text="Assets/Scripts" style="background-color: rgba(42, 42, 42, 0); border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-left-width: 0; -unity-text-outline-color: rgba(58, 111, 169, 0);" />
+    <engine:VisualElement name="MasterContainer" class="lockable-spacing" style="flex-grow: 0; height: 350px; justify-content: space-between; align-items: stretch; flex-shrink: 0;">
+        <FolderPathSelection name="RootFolderPath" enabled="false" default-path="Assets/Scripts" label="Root Folder Path" label-text="Root Folder Path" />
+        <engine:VisualElement name="Divider" class="divider-styling" style="flex-grow: 0; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; background-color: rgb(116, 116, 116); height: 3px;" />
+        <engine:VisualElement name="Toggles" style="flex-grow: 0; flex-direction: column;">
+            <engine:VisualElement style="flex-grow: 1; flex-direction: row;">
+                <engine:Toggle label="Use Default Path&#10;" name="PathToggle" value="true" tooltip="Default path can also be changed by setting the Default Path value inside RootFolderPath element." class="lockable-spacing-internal" style="flex-direction: row; align-self: stretch; -unity-text-align: middle-left;" />
+                <engine:VisualElement name="Filler" style="flex-grow: 1;" />
+                <engine:Label text="Default: (Assets/Scripts)" name="DefaultPathLabel" class="lockable-spacing-internal" style="-unity-text-align: middle-left; text-overflow: ellipsis; margin-top: 4px; margin-left: 10px; align-self: auto; align-items: auto; align-content: auto; background-color: rgb(49, 49, 49); border-left-color: rgb(27, 27, 27); border-right-color: rgb(27, 27, 27); border-top-color: rgb(27, 27, 27); border-bottom-color: rgb(27, 27, 27); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; padding-top: 0; padding-right: 2px; padding-bottom: 0; padding-left: 2px; color: rgb(92, 92, 92); flex-grow: 0; flex-basis: initial; position: relative; right: 0; left: 0;" />
             </engine:VisualElement>
-            <engine:Button text="Change Path" name="PathButton" />
+            <engine:Toggle label="↪ Set Individuallly" name="IndividualPathToggle" value="false" enabled="false" class="lockable-spacing-sub" style="align-content: auto; align-self: flex-start; min-height: auto; -unity-text-align: middle-left;" />
+            <engine:Toggle label="Share Name" value="true" name="NameToggle" class="lockable-spacing-internal" style="align-items: stretch; display: flex; -unity-text-align: middle-left;" />
         </engine:VisualElement>
-        <engine:Toggle label="Use Default Path&#10;" name="PathToggle" value="true" class="lockable-spacing-internal" />
-        <engine:VisualElement name="PathToggleRevealElem" enabled="true" class="lockable-spacing-internal" style="flex-grow: 1; flex-direction: row; margin-top: 0; visibility: visible; overflow: visible; display: none;">
-            <engine:Toggle label="↪ Set Individuallly" name="IndividualPathToggle" value="false" class="lockable-spacing-internal" style="align-content: auto; align-self: flex-start;" />
+        <engine:VisualElement name="Divider" class="divider-styling" style="flex-grow: 0; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; background-color: rgb(116, 116, 116); height: 3px;" />
+        <engine:VisualElement name="TextFields" style="flex-grow: 0;">
+            <engine:TextField label="Asset Name" placeholder-text="NewLockableObject" name="AssetName" class="lockable-spacing-internal" />
+            <engine:VisualElement name="CopyNameTo" enabled="true" style="flex-grow: 0; height: auto;">
+                <engine:TextField label="Script Name" placeholder-text="NewLockableObject.cs" name="ScriptName" enabled="false" class="lockable-spacing-internal" />
+                <FolderPathSelection name="ScriptPathSelection" enabled="false" default-path="Assets/Scripts" style="display: flex;" />
+                <engine:TextField label="Editor Script Name" placeholder-text="NewLockableObjectEditor.cs" name="EditorName" enabled="false" class="lockable-spacing-internal" />
+                <FolderPathSelection name="EditorPathSelection" enabled="false" default-path="Assets/Scripts/Editor" style="display: flex;" />
+                <engine:TextField label="UXML Name" placeholder-text="NewLockableObject.uxml" name="UXMLName" enabled="false" class="lockable-spacing-internal" />
+                <FolderPathSelection name="UXMLPathSelection" enabled="false" default-path="Assets/Scripts/UI/UXML" style="display: flex;" />
+            </engine:VisualElement>
         </engine:VisualElement>
-        <engine:Toggle label="Share Name" value="true" name="NameToggle" class="lockable-spacing-internal" />
+        <engine:VisualElement name="Divider" class="divider-styling" style="flex-grow: 0; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; background-color: rgb(116, 116, 116); height: 3px;" />
+        <engine:Button text="Create Asset" name="CreateButton" parse-escape-sequences="true" class="lockable-spacing" style="max-height: 30px; min-height: 25px; margin-bottom: 10px; font-size: 16px; -unity-font-style: bold;" />
     </engine:VisualElement>
-    <engine:VisualElement name="TextFields" class="lockable-spacing" style="flex-grow: 1; justify-content: flex-start;">
-        <engine:TextField label="Asset Name" placeholder-text="NewLockableObject" name="AssetName" class="lockable-spacing-internal" />
-        <engine:VisualElement name="CopyNameTo" enabled="false" style="flex-grow: 1;">
-            <engine:TextField label="Script Name" placeholder-text="NewLockableObject.cs" name="ScriptName" class="lockable-spacing-internal" />
-            <engine:TextField label="Editor Script Name" placeholder-text="NewLockableObjectEditor.cs" name="EditorName" class="lockable-spacing-internal" />
-            <engine:TextField label="UXML Name" placeholder-text="NewLockableObject.uxml" name="UXMLName" class="lockable-spacing-internal" />
-        </engine:VisualElement>
-    </engine:VisualElement>
-    <engine:Button text="Create Asset" name="CreateButton" class="lockable-spacing" style="max-height: 30px; min-height: 25px; margin-bottom: 10px;" />
 </engine:UXML>

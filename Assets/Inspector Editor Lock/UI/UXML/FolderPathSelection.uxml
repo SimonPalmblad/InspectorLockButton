@@ -1,0 +1,7 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Inspector%20Editor%20Lock/UI/USS/CreateAssetWindow.uss?fileID=7433441132597879392&amp;guid=df823d17dd4001a4e9ecdd1afad93e3b&amp;type=3#CreateAssetWindow" />
+    <engine:VisualElement name="PathElem" enabled="true" class="lockable-spacing-internal unity-text-field unity-base-text-field unity-base-field" style="flex-grow: 1; flex-direction: row; min-width: auto; height: auto; max-height: 20px; max-width: none; min-height: auto; margin-bottom: 6px;">
+        <engine:TextField label="Folder Path" name="PathTextField" style="flex-grow: 1; text-overflow: ellipsis; max-width: none;" />
+        <engine:Button text="Change Path" name="PathButton" style="overflow: visible;" />
+    </engine:VisualElement>
+</engine:UXML>
