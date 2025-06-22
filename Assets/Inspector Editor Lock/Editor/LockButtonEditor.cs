@@ -1,49 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
-using System;
-using NUnit.Framework.Interfaces;
-using Unity.VisualScripting;
 using EditorLockUtilies;
 
-[CustomEditor(typeof(LockButtonTest))]
-public class LockButtonEditor : Editor
+namespace EditorLock
 {
-    public VisualTreeAsset VisualTree;
-    public SerializedProperty m_EditorLockedProps;
 
-    private void OnEnable()
+    [CustomEditor(typeof(LockButtonTest))]
+    public class LockButtonEditor : Editor
     {
-        if(VisualTree == null)
+        public VisualTreeAsset VisualTree;
+        public SerializedProperty m_EditorLockedProps;
+
+        private void OnEnable()
         {
-            Debug.Log($"No Visual Tree Asset present on {target.name}. Could not create custom Inspector with Editor Locks.");
-            return;
+            if (VisualTree == null)
+            {
+                Debug.Log($"No Visual Tree Asset present on {target.name}. Could not create custom Inspector with Editor Locks.");
+                return;
+            }
+
+            // find the bool that controls lock states
+            m_EditorLockedProps = serializedObject.FindProperty(nameof(LockButtonTest.m_EditorLocks));
         }
 
-        // find the bool that controls lock states
-        m_EditorLockedProps = serializedObject.FindProperty(nameof(LockButtonTest.m_EditorLocks));
-    }
-
-    public override VisualElement CreateInspectorGUI()
-    {
-        VisualElement root = new VisualElement();
-
-        if (VisualTree == null)
+        public override VisualElement CreateInspectorGUI()
         {
-            Debug.Log($"Drawing default GUI for {target.name}.");
-            base.CreateInspectorGUI();
+            VisualElement root = new VisualElement();
+
+            if (VisualTree == null)
+            {
+                Debug.Log($"Drawing default GUI for {target.name}.");
+                base.CreateInspectorGUI();
+            }
+
+            else
+            {
+                VisualTree.CloneTree(root);
+
+                // create an array of bools requal to the number of locks attached to this UI element
+                EditorLockUtility.InitializeLocks(root, serializedObject, m_EditorLockedProps);
+            }
+
+            return root;
         }
-
-        else
-        {
-            VisualTree.CloneTree(root);
-
-            // create an array of bools requal to the number of locks attached to this UI element
-            EditorLockUtility.InitializeLocks(root, serializedObject, m_EditorLockedProps);
-        }
-
-        return root;
-    }
+    } 
 }

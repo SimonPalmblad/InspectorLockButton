@@ -1,8 +1,9 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <EditorLock name="DropDownLock" top-margin="6">
+    <EditorLock.EditorLockElement>
+        <EditorLock.EditorLockElement />
         <engine:DropdownField label="Dropdown" />
-    </EditorLock>
-    <EditorLock top-margin="12" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
-        <engine:Button text="Button" />
-    </EditorLock>
+        <EditorLock.EditorLockElement>
+            <engine:Button text="Button" />
+        </EditorLock.EditorLockElement>
+    </EditorLock.EditorLockElement>
 </engine:UXML>

@@ -1,7 +1,7 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Assets/Inspector%20Editor%20Lock/UI/USS/CreateAssetWindow.uss?fileID=7433441132597879392&amp;guid=df823d17dd4001a4e9ecdd1afad93e3b&amp;type=3#CreateAssetWindow" />
     <engine:VisualElement name="MasterContainer" class="lockable-spacing" style="flex-grow: 0; height: 350px; justify-content: space-between; align-items: stretch; flex-shrink: 0;">
-        <FolderPathSelection name="RootFolderPath" enabled="false" default-path="Assets/Scripts" label="Root Folder Path" label-text="Root Folder Path" />
+        <EditorLock.FolderPathSelection name="RootFolderPath" enabled="false" default-path="Assets/Scripts" label="Root Folder Path" label-text="Root Folder Path" />
         <engine:VisualElement name="Divider" class="divider-styling" style="flex-grow: 0; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; background-color: rgb(116, 116, 116); height: 3px;" />
         <engine:VisualElement name="Toggles" style="flex-grow: 0; flex-direction: column;">
             <engine:VisualElement style="flex-grow: 1; flex-direction: row;">
@@ -17,11 +17,11 @@
             <engine:TextField label="Asset Name" placeholder-text="NewLockableObject" name="AssetName" class="lockable-spacing-internal" />
             <engine:VisualElement name="CopyNameTo" enabled="true" style="flex-grow: 0; height: auto;">
                 <engine:TextField label="Script Name" placeholder-text="NewLockableObject.cs" name="ScriptName" enabled="false" class="lockable-spacing-internal" />
-                <FolderPathSelection name="ScriptPathSelection" enabled="false" default-path="Assets/Scripts" style="display: flex;" />
+                <EditorLock.FolderPathSelection name="ScriptPathSelection" enabled="false" default-path="Assets/Scripts" style="display: flex;" />
                 <engine:TextField label="Editor Script Name" placeholder-text="NewLockableObjectEditor.cs" name="EditorName" enabled="false" class="lockable-spacing-internal" />
-                <FolderPathSelection name="EditorPathSelection" enabled="false" default-path="Assets/Scripts/Editor" style="display: flex;" />
+                <EditorLock.FolderPathSelection name="EditorPathSelection" enabled="false" default-path="Assets/Scripts/Editor" style="display: flex;" />
                 <engine:TextField label="UXML Name" placeholder-text="NewLockableObject.uxml" name="UXMLName" enabled="false" class="lockable-spacing-internal" />
-                <FolderPathSelection name="UXMLPathSelection" enabled="false" default-path="Assets/Scripts/UI/UXML" style="display: flex;" />
+                <EditorLock.FolderPathSelection name="UXMLPathSelection" enabled="false" default-path="Assets/Scripts/UI/UXML" style="display: flex;" />
             </engine:VisualElement>
         </engine:VisualElement>
         <engine:VisualElement name="Divider" class="divider-styling" style="flex-grow: 0; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; background-color: rgb(116, 116, 116); height: 3px;" />

@@ -1,9 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class LockButtonTest : MonoBehaviour
+namespace EditorLock
 {
-    [SerializeField]
-    public bool[] m_EditorLocks = new bool[0];
+	public class LockButtonTest : MonoBehaviour
+	{
+		[SerializeField]
+		public bool[] m_EditorLocks = new bool[0];
 
+	} 
 }

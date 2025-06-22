@@ -9,14 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cff524be83ab1b04ebdcd82c72b847a4, type: 3}
-  m_Name: BardClass
+  m_Script: {fileID: 11500000, guid: 85558db368a476d4483ebdf95e4fdaeb, type: 3}
+  m_Name: Editor Lock Settings
   m_EditorClassIdentifier: 
-  m_EditingLocked: 1
-  Class: 2
-  Health: 123123
-  MoveSpeed: 444
-  Arms: 5
-  Teeth: 8
-  ItemSlots: 5
-  StartingItem: {fileID: 11400000, guid: 3b9718af18911f945afa42c83559bf0f, type: 2}
+  DefaultAssetPath: 
+  Unlocked: {r: 0, g: 0, b: 0, a: 0}
+  Locked: {r: 0, g: 0, b: 0, a: 0}
+  LockedOpacity: 0

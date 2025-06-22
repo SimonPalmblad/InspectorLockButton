@@ -1,7 +1,8 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:TextField label="Text Field" placeholder-text="filler text" />
-    <EditorLock>
+    <Style src="project://database/Assets/UI/USS/EditorLockButtonStyle.uss?fileID=7433441132597879392&amp;guid=f21b008cb8aacb3459a981fe3e15a147&amp;type=3#EditorLockButtonStyle" />
+    <EditorLock.EditorLockElement>
+        <engine:TextField label="Text Field" placeholder-text="filler text" class="locked" />
         <engine:TextField label="Text Field" placeholder-text="filler text" enabled="true" name="Name" />
         <engine:SliderInt label="Cool Slider ❤" value="42" high-value="100" name="Sliderino" />
-    </EditorLock>
+    </EditorLock.EditorLockElement>
 </engine:UXML>

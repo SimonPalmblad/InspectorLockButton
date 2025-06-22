@@ -1,13 +1,16 @@
 using UnityEditor;
 using UnityEngine;
 
-public class CreateAssetEditor: Editor
+namespace EditorLock
 {
-
-    //[MenuItem("EditorLock/Show Window")]
-    public static void CreateWindow()
+    public class CreateAssetEditor : Editor
     {
-        CreateAssetWindow wnd = new CreateAssetWindow();
-        wnd.titleContent = new GUIContent("CreateAssetWindow");
-    }
+
+        //[MenuItem("EditorLock/Show Window")]
+        public static void CreateWindow()
+        {
+            AssetCreationWindow wnd = new AssetCreationWindow();
+            wnd.titleContent = new GUIContent("CreateAssetWindow");
+        }
+    } 
 }

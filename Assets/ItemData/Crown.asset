@@ -12,14 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f3b330d2a7bf1542ad763744a14c9f5, type: 3}
   m_Name: Crown
   m_EditorClassIdentifier: 
-  m_EditorLocked: 0
   m_InventoryIcon: {fileID: 2800000, guid: 7a277d2a5295e034a856200a7bfe7833, type: 3}
-  m_Description: 'As seen worn by any true King. This is an expanding text box. You
+  m_Description: As seen worn by any true King. This is an expanding text box. You
     can keep on typing here and the box will expand, shrink, and all that good jazz.
-
-
-    A
-    new row. :O
-
-'
   m_GoldValue: 2000
+  LockedState: 

@@ -7,6 +7,7 @@ using UnityEditor.UIElements;
 using System;
 using System.Runtime;
 using System.Linq;
+using EditorLock;
 
 [CustomEditor(typeof(ClassStats))]
 public class ClassStatsEditor : Editor
@@ -29,7 +30,7 @@ public class ClassStatsEditor : Editor
         VisualElement root = new VisualElement();
         VisualTree.CloneTree(root);
 
-        root.Q<EditorLock>().Init(serializedObject, m_EditingLockedProp);
+        root.Q<EditorLockElement>().Init(serializedObject, m_EditingLockedProp);
 
         
         return root;

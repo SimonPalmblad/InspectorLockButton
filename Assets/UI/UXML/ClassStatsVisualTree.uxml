@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <ui:Template name="SectionHeader" src="project://database/Assets/UI/UXML/Templates/SectionHeader.uxml?fileID=9197481963319205126&amp;guid=aa87c7bc36de61a4fbb8b5d63b873a77&amp;type=3#SectionHeader" />
     <Style src="project://database/Assets/UI/USS/PlayerInspectorStyle.uss?fileID=7433441132597879392&amp;guid=28bcfc21e25ee3f4aa697560d92f21e0&amp;type=3#PlayerInspectorStyle" />
-    <EditorLock element-to-lock="MainElem" locked-icon="project://database/Assets/UI/Icons/closed.png?fileID=2800000&amp;guid=aab4aa87cedab3d41946230a364aa2e8&amp;type=3#closed" unlocked-icon="project://database/Assets/UI/Icons/open.png?fileID=2800000&amp;guid=5092e81ae3bb2b048b57c4f983dbd36b&amp;type=3#open">
+    <EditorLock.EditorLockElement>
         <ui:VisualElement name="MainElem" style="flex-grow: 1; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; border-left-color: rgb(182, 128, 0); border-right-color: rgb(182, 128, 0); border-bottom-color: rgb(182, 128, 0); border-top-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; border-bottom-left-radius: 12px; border-top-color: rgb(182, 128, 0);">
             <ui:VisualElement name="Class" class="section" style="flex-grow: 1;">
                 <ui:VisualElement name="SectionHeader" style="flex-grow: 1;">
@@ -12,21 +12,25 @@
                 </ui:VisualElement>
                 <ui:EnumField label="Enum" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" value="Center" binding-path="Class" name="ClassField" style="flex-direction: row-reverse; scale: 1 1; max-width: 400px; font-size: 20px; overflow: hidden;" />
             </ui:VisualElement>
-            <ui:VisualElement name="Attributes" class="section" style="flex-grow: 1;">
-                <ui:VisualElement name="AttributesElem" style="flex-grow: 1;">
-                    <ui:Instance template="SectionHeader" name="SectionHeader" />
-                    <ui:VisualElement name="Vars" style="flex-grow: 1;">
-                        <ui:FloatField label="Health" value="42.2" binding-path="Health" name="HP" class="element" />
-                        <ui:FloatField label="Move speed" value="42.2" name="MOVE" binding-path="MoveSpeed" class="element" />
-                        <ui:IntegerField label="Arms" value="42" name="ARM" binding-path="Arms" class="element" />
-                        <ui:IntegerField label="Teeth" value="42" name="TEETH" binding-path="Teeth" class="element" />
-                        <ui:IntegerField label="Item Slots" value="42" name="SLOTS" binding-path="ItemSlots" class="element" />
+            <EditorLock.EditorLockElement>
+                <ui:VisualElement name="Attributes" class="section" style="flex-grow: 1;">
+                    <ui:VisualElement name="AttributesElem" style="flex-grow: 1;">
+                        <ui:Instance template="SectionHeader" name="SectionHeader" />
+                        <ui:VisualElement name="Vars" style="flex-grow: 1;">
+                            <ui:FloatField label="Health" value="42.2" binding-path="Health" name="HP" class="element" />
+                            <ui:FloatField label="Move speed" value="42.2" name="MOVE" binding-path="MoveSpeed" class="element" />
+                            <ui:IntegerField label="Arms" value="42" name="ARM" binding-path="Arms" class="element" />
+                            <ui:IntegerField label="Teeth" value="42" name="TEETH" binding-path="Teeth" class="element" />
+                            <ui:IntegerField label="Item Slots" value="42" name="SLOTS" binding-path="ItemSlots" class="element" />
+                        </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:VisualElement>
-            </ui:VisualElement>
-            <ui:VisualElement name="StartingItem" picking-mode="Ignore" class="section" style="flex-grow: 1;">
-                <uie:PropertyField binding-path="StartingItem" name="Item" label="Starting item" picking-mode="Ignore" class="element" />
-            </ui:VisualElement>
+            </EditorLock.EditorLockElement>
+            <EditorLock.EditorLockElement>
+                <ui:VisualElement name="StartingItem" picking-mode="Ignore" class="section" style="flex-grow: 1;">
+                    <uie:PropertyField binding-path="StartingItem" name="Item" label="Starting item" picking-mode="Ignore" class="element" />
+                </ui:VisualElement>
+            </EditorLock.EditorLockElement>
         </ui:VisualElement>
-    </EditorLock>
+    </EditorLock.EditorLockElement>
 </ui:UXML>

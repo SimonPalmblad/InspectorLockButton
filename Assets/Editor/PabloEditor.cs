@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
+using EditorLock;
 
 [CustomEditor(typeof(PabloScript))]
 public class PabloEditor : Editor
@@ -42,7 +43,7 @@ public class PabloEditor : Editor
         //m_ItemNameElem = root.Q<Label>("SectionLabel");
         //m_PreviousButton = root.Q<Button>("PreviousButton");
 
-        root.Q<EditorLock>().Init(serializedObject, m_EditorLockedProp);
+        root.Q<EditorLockElement>().Init(serializedObject, m_EditorLockedProp);
 
         //m_PreviousButton.RegisterCallback<ClickEvent>(PreviousSelection);
 

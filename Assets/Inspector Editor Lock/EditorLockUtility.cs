@@ -2,14 +2,14 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
-using static UnityEngine.GraphicsBuffer;
+using EditorLock;
 
 namespace EditorLockUtilies
 {
     public static class EditorLockUtility
     {
 
-        public static SerializedProperty OnEnable<T>(VisualTreeAsset treeAsset, T target) where T : MonoBehaviour
+        public static SerializedProperty OnEnable<T>(VisualTreeAsset treeAsset, T target) where T : UnityEngine.Object
         {
             if (treeAsset == null)
             {
@@ -48,14 +48,14 @@ namespace EditorLockUtilies
             }
 
             var temp = root.Query("LockElem").ToList();
-            List<EditorLock> editorLocks = new List<EditorLock>();
+            List<EditorLockElement> editorLocks = new List<EditorLockElement>();
 
             foreach (VisualElement elem in temp)
             {
                 var _lock = elem.hierarchy.parent;
-                if (_lock is EditorLock)
+                if (_lock is EditorLockElement)
                 {
-                    editorLocks.Add((EditorLock)_lock);
+                    editorLocks.Add((EditorLockElement)_lock);
                 }
             }
             // Might not be safe if adding buttons on the fly?
