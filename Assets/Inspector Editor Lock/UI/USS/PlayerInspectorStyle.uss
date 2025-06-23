@@ -1,0 +1,132 @@
+.unity-property-field {
+}
+
+.section {
+    width: auto;
+    padding-right: 6px;
+    padding-left: 6px;
+    padding-top: 6px;
+    margin-right: 3px;
+    margin-left: 3px;
+    background-color: var(--unity-colors-app_toolbar-background);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    padding-bottom: 6px;
+    margin-top: 3px;
+}
+
+.section-debug {
+    width: 50%;
+    padding-right: 6px;
+    padding-left: 6px;
+    padding-top: 6px;
+    margin-right: 3px;
+    margin-left: 3px;
+    background-color: var(--unity-colors-app_toolbar-background);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    padding-bottom: 6px;
+    margin-top: 3px;
+    border-left-color: rgb(202, 139, 27);
+    border-right-color: rgb(202, 139, 27);
+    border-top-color: rgb(202, 139, 27);
+    border-bottom-color: rgb(202, 139, 27);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+}
+
+.element {
+    margin-top: 3px;
+    margin-right: 3px;
+    margin-bottom: 3px;
+    margin-left: 3px;
+    font-size: 14px;
+    color: var(--unity-colors-default-text);
+}
+
+.header {
+    font-size: 20px;
+    -unity-font-style: bold;
+    letter-spacing: 10px;
+    margin-top: 3px;
+    margin-right: 3px;
+    margin-bottom: 0;
+    margin-left: 3px;
+    padding-top: 0;
+}
+
+.header-divider {
+    background-color: rgb(140, 59, 56);
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 12px;
+    margin-left: 3px;
+    height: 3px;
+    max-height: 3px;
+}
+
+.paragraph {
+    margin-top: 3px;
+    margin-right: 3px;
+    margin-bottom: 3px;
+    margin-left: 3px;
+}
+
+.unity-toggle__checkmark {
+    font-size: 12px;
+    -unity-font-style: normal;
+    scale: 1.4 1.4;
+    rotate: 0;
+    overflow: visible;
+    margin-left: 3px;
+}
+
+.unity-enum-field__label {
+    font-size: 20px;
+    -unity-font-style: normal;
+    color: rgba(27, 27, 27, 0);
+}
+
+.element.foldout {
+    margin-left: 12px;
+}
+
+.element.read-only {
+    opacity: 0.76;
+}
+
+.lock-button {
+}
+
+.unity-button {
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    border-bottom-color: rgba(255, 255, 255, 0);
+    -unity-text-outline-width: 0;
+    -unity-text-outline-color: rgb(0, 0, 0);
+    font-size: 20px;
+    -unity-font-style: bold;
+    margin-top: 3px;
+    margin-right: 3px;
+    margin-bottom: 3px;
+    margin-left: 3px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}

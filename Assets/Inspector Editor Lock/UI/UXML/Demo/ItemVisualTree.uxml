@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/UI/USS/PlayerInspectorStyle.uss?fileID=7433441132597879392&amp;guid=28bcfc21e25ee3f4aa697560d92f21e0&amp;type=3#PlayerInspectorStyle" />
+    <ui:VisualElement name="SectionHeader" />
+    <ui:VisualElement name="SectionHeader" style="flex-grow: 1;">
+        <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SectionLabel" class="header" />
+        <ui:VisualElement name="SectionDivider" class="header-divider" style="flex-grow: 1;" />
+    </ui:VisualElement>
+    <EditorLock.EditorLockElement>
+        <ui:VisualElement name="IconElem" style="flex-grow: 1; flex-direction: column;">
+            <ui:VisualElement name="IconElem" class="section" style="flex-grow: 1; flex-direction: column;">
+                <uie:PropertyField binding-path="m_InventoryIcon" name="IconProp" enabled="true" class="element" style="flex-direction: row; align-items: flex-start;" />
+                <ui:VisualElement name="IconPreview" enabled="true" class="element" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); width: 80px; height: 80px; border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; flex-shrink: 0; margin-left: 3px; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; border-left-color: rgb(91, 91, 91); border-right-color: rgb(91, 91, 91); border-top-color: rgb(91, 91, 91); border-bottom-color: rgb(91, 91, 91); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; -unity-background-scale-mode: scale-to-fit; justify-content: center;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="AttributesElem" enabled="true" class="section" style="flex-grow: 1; flex-direction: column;">
+            <ui:IntegerField label="Gold value" value="0" binding-path="m_GoldValue" readonly="false" name="IntegerField" enabled="true" class="element" style="flex-wrap: wrap; flex-grow: 1; flex-direction: column; max-height: 45px; max-width: 25%; justify-content: flex-start; align-self: stretch;" />
+            <ui:TextField picking-mode="Ignore" label="Description" value="filler text" name="Description" binding-path="m_Description" multiline="true" class="paragraph element" style="flex-grow: 1; white-space: normal; flex-direction: column; align-self: stretch;" />
+        </ui:VisualElement>
+    </EditorLock.EditorLockElement>
+</ui:UXML>

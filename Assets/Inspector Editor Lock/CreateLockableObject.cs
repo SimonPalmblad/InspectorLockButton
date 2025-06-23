@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Text;
 using System;
 using System.Linq;
+using System.IO;
 
 namespace EditorLock
 {
@@ -115,6 +116,12 @@ namespace EditorLock
 
             string folderDirectory = path;
 
+            if (System.IO.File.Exists(path + "/" + name))
+            {
+                Debug.Log($"A UXML file with the name '{name}' already exists!");
+                return;
+            }
+
             #region Test Code
 
             // Test spoofing
@@ -125,18 +132,17 @@ namespace EditorLock
             }
 
             //string guid = AssetDatabase.CreateFolder($"Assets/{UIFolder}", "UXML");
-            //folderDirectory = AssetDatabase.GUIDToAssetPath(guid);
+            //folderDirectory = AssetDatabase.GUIDToAssetPath(guid);  
 
-
-
-            Debug.Log($"Created UXML Asset in: '{folderDirectory}/LockableUXMLTemplate.uxml'");
+            Debug.Log($"Created UXML Asset in: '{folderDirectory}/{name}'");
             Debug.Log("");
 
             #endregion
 
-
-
             #region Runtime Code
+            AssetDatabase.CopyAsset("Assets/Inspector Editor Lock/UI/UXML/LockableUXMLTemplate.uxml", $"{folderDirectory}/{name}.uxml");
+            AssetDatabase.Refresh();
+
             /*
             // Create folder if it doesn't exist
             if (!AssetDatabase.IsValidFolder(folderDirectory))
@@ -177,7 +183,7 @@ namespace EditorLock
         }
 
         /// ⚠ WARNING ⚠ This doubles the root folder for every path creation
-        private static string CreateDirectories(string folderPath, string parentfolder = "Assets")
+        private static string CreateDirectories(string folderPath, string parentDirectory = "Assets")
         {
             string[] folders = folderPath.Split("/");
 
@@ -190,7 +196,7 @@ namespace EditorLock
 
             for (int i = 0; i < folders.Length; i++)
             {
-                var currentFolder = folders[i];
+                var currentFolder = folders[i];      
 
                 // Sets path if unassigned
                 if (path == string.Empty)
@@ -198,15 +204,22 @@ namespace EditorLock
                     path = currentFolder;
                 }
 
-                // Continue if path is valid and add current directory to path
-                if (AssetDatabase.IsValidFolder(path))
+                if (i > 0)
                 {
                     path += "/" + currentFolder;
+                }
+
+                // Continue if path is valid and add current directory to path
+                if (AssetDatabase.IsValidFolder(path))
+                {           
+                    Debug.Log($"Found folder: {currentFolder} in path {path}");
                     continue;
                 }
 
-                //AssetDatabase.CreateFolder(folderPath, directory);
-                path += "/" + currentFolder;
+                AssetDatabase.CreateFolder(Path.GetDirectoryName(path), Path.GetFileName(currentFolder));
+                //path += "/" + currentFolder;
+                Debug.Log($"Directory name:{Path.GetDirectoryName(currentFolder)}");
+                Debug.Log($"File name:{Path.GetFileName(currentFolder)}");
                 Debug.Log($"Created folder: {currentFolder} in path {path}");
             }
 

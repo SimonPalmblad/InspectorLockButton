@@ -1,10 +1,10 @@
-<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <engine:Label text="⚙ Editor Lock Global settings" name="Title" style="margin-top: 8px; font-size: 16px;" />
     <EditorLock.EditorLockElement>
-        <EditorLock.FolderPathSelection label-text="Default Asset Path" bind-to-editor-property="DefaultAssetPath" />
+        <EditorLock.FolderPathSelection label-text="Default Asset Path" bind-to-editor-property="DefaultAssetPath" name="RootFolderPath" default-path="Scripts" prefix="Assets/" />
         <engine:Label text="Styling " name="Subsection" style="margin-top: 8px; font-size: 14px; margin-bottom: 6px; margin-left: 4px;" />
-        <editor:ColorField label="Unlocked Color" value="#00FFFFFF" binding-path="UnlockedColor" name="UnlockedCol" />
-        <editor:ColorField label="Locked Color" value="#00FFFFFF" binding-path="LockedColor" name="LockedCol" />
+        <editor:ColorField label="Unlocked Color" value="#00FFFFFF" name="UnlockedCol" />
+        <editor:ColorField label="Locked Color" value="#00FFFFFF" name="LockedCol" />
         <engine:Slider label="Locked Opacity" value="42" high-value="1" enabled="true" fill="true" direction="Horizontal" name="LockedOpacity" />
     </EditorLock.EditorLockElement>
 </engine:UXML>

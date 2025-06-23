@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -33,22 +34,28 @@ namespace EditorLock
         private TextField m_AssetNameField;
         private TextField m_RootFolderPath;
 
-        private FolderPathSelection m_RootFolderPathSelection;
+        private Toggle indvPathToggle;
 
-        private string m_RootFolderPathName = "RootFolderPath";
+        private FolderPathSelection m_RootFolderPathElem;
+        private FolderPathSelection m_ScriptFolderPathElem;
+        private FolderPathSelection m_EditorFolderPathElem;
+        private FolderPathSelection m_UXMLFolderPathElem;
+
         private string m_ScriptName = "ScriptName";
         private string m_EditorName = "EditorName";
-        private string m_UXMLName = "UXMLName";
+        //private string m_UXMLName = "UXMLName";
 
-        private string m_ScriptPathName = "ScriptPathSelection";
-        private string m_EditorPathName = "EditorPathSelection";
-        private string m_UXMLPathName = "UXMLPathSelection";
+        private string m_RootFolderPathName = "RootFolderPath";
+        private string m_ScriptFolderPathName = "ScriptPathSelection";
+        private string m_EditorFolderPathName = "EditorPathSelection";
+        private string m_UXMLFolderPathName = "UXMLPathSelection";
+        private bool m_UseDefaultFolder;
 
         [MenuItem("EditorLock/Show Window")]
-        public static void ShowExample()
+        public static void ShowWindow()
         {
             AssetCreationWindow wnd = GetWindow<AssetCreationWindow>();
-            wnd.titleContent = new GUIContent("🔒 LockableAsset");
+            wnd.titleContent = new GUIContent("🔒 New Lockable");
         }
 
         public void CreateGUI()
@@ -62,14 +69,19 @@ namespace EditorLock
 
             Toggle nameToggle = root.Q<Toggle>("NameToggle");
             Toggle pathToggle = root.Q<Toggle>("PathToggle");
-            Toggle indvPathToggle = root.Q<Toggle>("IndividualPathToggle");
+            indvPathToggle = root.Q<Toggle>("IndividualPathToggle");
 
             m_MasterContainer = root.Q<VisualElement>("MasterContainer");
             m_AssetNameField = root.Q<TextField>("AssetName");
             m_CopyNameToElem = root.Q<VisualElement>("CopyNameTo");
             // lazy solution. Should be set to be a FolderPathSelection
 
-            m_RootFolderPath = m_RootFolderPathSelection.Q<TextField>("PathTextField");
+            m_RootFolderPathElem = root.Q<FolderPathSelection>(m_RootFolderPathName);
+            m_ScriptFolderPathElem = root.Q<FolderPathSelection>(m_ScriptFolderPathName);
+            m_EditorFolderPathElem = root.Q<FolderPathSelection>(m_EditorFolderPathName);
+            m_UXMLFolderPathElem = root.Q<FolderPathSelection>(m_UXMLFolderPathName);
+
+            m_RootFolderPath = m_RootFolderPathElem.Q<TextField>("PathTextField");
 
             Button createAssetsButton = root.Q<Button>("CreateButton");
             #endregion
@@ -80,9 +92,11 @@ namespace EditorLock
             pathToggle.RegisterValueChangedCallback(DefaultPathToggled);
             indvPathToggle.RegisterValueChangedCallback(IndividualPathsToggled);
 
+            m_RootFolderPath.RegisterValueChangedCallback(RootFolderChanged);
+
             createAssetsButton.RegisterCallback<ClickEvent>(CreateAssets);
 
-            m_RootFolderPath.RegisterCallback<InputEvent>(UpdateAllPathNames);
+            //m_RootFolderPath.RegisterCallback<InputEvent>(UpdateAllPathNames);
             m_AssetNameField.RegisterCallback<InputEvent>(UpdateAllNames);
 
             // Register all CopyTextToElement children's events
@@ -111,6 +125,11 @@ namespace EditorLock
             #endregion
         }
 
+        private void RootFolderChanged(ChangeEvent<string> evt)
+        {
+            UpdateAllPathNames(m_RootFolderPathElem.PathRaw);
+        }
+
         private void CreateAssets(ClickEvent evt)
         {
             TextField uxmlField = new TextField();
@@ -137,13 +156,13 @@ namespace EditorLock
 
 
             // If not using individual creation
-            CreateLockableObject.CreateLockableAsset(PlaceholderIfEmpty(m_AssetNameField));
+            //CreateLockableObject.CreateLockableAsset(PlaceholderIfEmpty(m_AssetNameField));
 
-            CreateLockableObject.CreateLockableScript(PlaceholderIfEmpty(scriptField), m_RootFolderPathSelection.CurrentPath);
+            //CreateLockableObject.CreateLockableScript(PlaceholderIfEmpty(scriptField), m_ScriptFolderPathSelection.PathFull);
 
-            CreateLockableObject.CreateLockableEditorScript(PlaceholderIfEmpty(editorField), m_RootFolderPathSelection.CurrentPath);
+            //CreateLockableObject.CreateLockableEditorScript(PlaceholderIfEmpty(editorField), m_EditorFolderPathSelection.PathFull);
 
-            CreateLockableObject.CreateLockableUXMLDoc(PlaceholderIfEmpty(uxmlField), m_RootFolderPathSelection.CurrentPath + "/UI" + "/UXML");
+            CreateLockableObject.CreateLockableUXMLDoc(PlaceholderIfEmpty(uxmlField), m_UXMLFolderPathElem.PathFull);
         }
 
         private string PlaceholderIfEmpty(TextField textField)
@@ -193,12 +212,6 @@ namespace EditorLock
             }
         }
 
-
-        private void UpdateAllPathNames(InputEvent evt)
-        {
-            UpdateAllPathNames(evt.newData);
-        }
-
         private void UpdateAllPathNames(string path)
         {
             foreach (FolderPathSelection elem in m_FolderPathFields)
@@ -216,24 +229,24 @@ namespace EditorLock
                     continue;
                 }
 
-                var newPath = path + "/";
+                var newPath = path; // Prefix all folders with 'Assets/'
 
                 // Script folder
-                if (elem.name == m_ScriptPathName)
+                if (elem.name == m_ScriptFolderPathName)
                 {
-                    elem.TextField.value = newPath + "Scripts";
+                    elem.TextField.value = newPath;
                     continue;
                 }
 
                 // Editor script folder
-                if (elem.name == m_EditorPathName)
+                if (elem.name == m_EditorFolderPathName)
                 {
-                    elem.TextField.value = newPath + "Scripts/Editor";
+                    elem.TextField.value = newPath + "/" +"Editor";
                     continue;
                 }
 
                 //Uxml folder
-                elem.TextField.value = newPath + "Scripts/UI/UXML";
+                elem.TextField.value = newPath + "/" + "UI/UXML";
             }
         }
 
@@ -259,18 +272,16 @@ namespace EditorLock
 
         private void DefaultPathToggled(ChangeEvent<bool> evt)
         {
-            var pathElem = rootVisualElement.Q<FolderPathSelection>(m_RootFolderPathName);
+            m_UseDefaultFolder = evt.newValue;
+
             var revealElem = rootVisualElement.Q<Toggle>("IndividualPathToggle");
-
-            pathElem.SetEnabled(!evt.newValue);
-            revealElem.SetEnabled(!evt.newValue);
-
-            // Set value of reveal toggle to 'false' if set to use DefaultPath
-            if (evt.newValue == true)
+            
+            m_RootFolderPathElem.SetEnabled(!m_UseDefaultFolder);           
+            revealElem.SetEnabled(!m_UseDefaultFolder);
+            
+            if (m_UseDefaultFolder)
             {
-                UpdateAllPathNames(m_RootFolderPath.textEdition.placeholder); // default root folder
-                revealElem.value = false;
-                return;
+                ToggleIndividualPaths(false);
             }
 
             UpdateAllPathNames(m_RootFolderPath.value); // custom root folder
@@ -278,19 +289,24 @@ namespace EditorLock
 
         private void IndividualPathsToggled(ChangeEvent<bool> evt)
         {
+            ToggleIndividualPaths(evt.newValue);
+        }
+
+        private void ToggleIndividualPaths(bool toggle)
+        {
+            indvPathToggle.value = toggle;
 
             foreach (FolderPathSelection folderPath in m_FolderPathFields)
             {
-                if (folderPath.name == m_RootFolderPathName)
+                if (folderPath.name == m_RootFolderPathName && !m_UseDefaultFolder)
                 {
-                    folderPath.SetEnabled(!evt.newValue);
+                    folderPath.SetEnabled(!toggle);
                     continue;
                 }
 
-                folderPath.SetEnabled(evt.newValue);
+                folderPath.SetEnabled(toggle);
             }
         }
-
     }
 
 }

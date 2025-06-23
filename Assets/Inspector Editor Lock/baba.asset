@@ -10,9 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85558db368a476d4483ebdf95e4fdaeb, type: 3}
-  m_Name: Editor Lock Settings
+  m_Name: baba
   m_EditorClassIdentifier: 
-  DefaultAssetPath: 
-  Unlocked: {r: 0, g: 0, b: 0, a: 0}
-  Locked: {r: 0, g: 0, b: 0, a: 0}
-  LockedOpacity: 0
+  UnlockedColor: {r: 0.79, g: 0.54, b: 0.1, a: 1}
+  LockedColor: {r: 0.474, g: 89, b: 0.8, a: 0.2}
+  m_LockableStates: 
