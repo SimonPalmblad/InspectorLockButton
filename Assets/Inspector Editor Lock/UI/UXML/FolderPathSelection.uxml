@@ -1,11 +1,11 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Assets/Inspector%20Editor%20Lock/UI/USS/CreateAssetWindow.uss?fileID=7433441132597879392&amp;guid=df823d17dd4001a4e9ecdd1afad93e3b&amp;type=3#CreateAssetWindow" />
-    <engine:VisualElement name="PathElem" enabled="true" class="lockable-spacing-internal unity-text-field unity-base-text-field unity-base-field" style="flex-grow: 1; flex-direction: row; min-width: auto; height: auto; max-height: 20px; max-width: none; min-height: auto; margin-bottom: 6px; margin-right: 0; margin-left: 0;">
+    <engine:VisualElement name="PathElem" enabled="true" class="lockable-spacing-internal unity-text-field unity-base-text-field unity-base-field" style="flex-grow: 1; flex-direction: row; min-width: auto; height: auto; max-height: 20px; max-width: none; min-height: auto; margin-bottom: 6px; margin-right: 3px; margin-left: 3px;">
         <engine:VisualElement name="FolderPathElem" style="flex-grow: 1; flex-direction: row;">
             <engine:Label text="Folder Path" name="Description" class="unity-text-field__label unity-textfield-imitation__label" />
             <engine:Label text="Label" name="Prefix" class="unity-textfield-imitation__input" style="-unity-text-align: middle-left;" />
             <engine:TextField name="PathTextField" enabled="true" style="flex-grow: 1; text-overflow: ellipsis; max-width: none;" />
         </engine:VisualElement>
-        <engine:Button text="Choose Folder" name="PathButton" style="overflow: visible;" />
+        <engine:Button text="Choose Folder" name="PathButton" style="overflow: visible; margin-right: 0; margin-left: 0; margin-bottom: 0; margin-top: 0;" />
     </engine:VisualElement>
 </engine:UXML>

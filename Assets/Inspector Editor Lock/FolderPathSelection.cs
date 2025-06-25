@@ -23,16 +23,12 @@ namespace EditorLock
         public string prefix { get; set; } = string.Empty;
 
         [UxmlAttribute]
-        public string defaultPath { get; set; } = "Assets/Scripts";
-
-        [UxmlAttribute]
-        public string bindToEditorProperty = string.Empty;        
+        public string defaultPath { get; set; } = "Assets/Scripts";   
 
         private string m_SetPathButtonName = "PathButton";
         private string m_TextFieldName = "PathTextField";
         private string m_DescriptionName = "Description";
         private string m_PrefixName = "Prefix";
-
 
         private TextField m_TextField;
         private Label m_Description;
@@ -53,10 +49,36 @@ namespace EditorLock
             Init();
         }
 
-        public FolderPathSelection(SerializedObject pathBindingObject)
+        public void SetPathBinding(SerializedObject pathBindingObject, string propertyPath)
         {
-            Init(pathBindingObject);
+            if (string.IsNullOrEmpty(propertyPath))
+            {
+                Debug.LogWarning($"No property path on {pathBindingObject.FindProperty("m_Name")} found when Initializing FolderPathSelection");
+                return;
+            }
+
+            m_TextField.bindingPath = propertyPath;
+            m_TextField.Bind(pathBindingObject);
         }
+
+        public void SetPrefix(string newPrefix)
+        {
+            prefix = newPrefix;
+            LateUXMLAttributeUpdate();
+        }
+        
+        public void SetDescription(string newDescription)
+        {
+            description = newDescription;
+            LateUXMLAttributeUpdate();
+        }
+        
+        public void SetDefaultPath(string newPath)       
+        {
+              defaultPath = newPath;
+            LateUXMLAttributeUpdate();
+        }
+  
 
         private void Init()
         {
@@ -71,26 +93,12 @@ namespace EditorLock
             m_Prefix = this.Q<Label>(m_PrefixName);
             m_TextField = this.Q<TextField>(m_TextFieldName);
 
+            m_TextField.RegisterValueChangedCallback(RemovePrefixWhenTyping);
+
             this.Q<Button>(m_SetPathButtonName)
                 .RegisterCallback<ClickEvent>(ShowFolderDialogue);
 
             this.schedule.Execute(LateUXMLAttributeUpdate).ExecuteLater(10);
-        }
-
-        /// <summary>
-        /// Initialize with path binding to update variable inside GameObject.
-        /// </summary>
-        /// <param name="pathBindingObject"></param>
-        public void Init(SerializedObject pathBindingObject)
-        {
-            Init();
-            if (bindToEditorProperty == string.Empty)
-            {
-                return;
-            }
-
-            m_TextField.bindingPath = bindToEditorProperty;
-            m_TextField.Bind(pathBindingObject);
         }
 
         /// <summary>
@@ -116,6 +124,12 @@ namespace EditorLock
             m_Prefix.text = prefix;
         }
 
+        private void RemovePrefixWhenTyping(ChangeEvent<string> evt)
+        {
+            m_TextField.value = RemovePrefixFromString(evt.newValue);
+
+        }
+
         private void ShowFolderDialogue(ClickEvent evt)
         {
             SetFolderPathFromDialogue();
@@ -123,22 +137,39 @@ namespace EditorLock
 
         private void SetFolderPathFromDialogue()
         {
-            Debug.Log($"Default path: {defaultPath}");
             var removeStringFromLocal = "Assets";
             string chosenFolder = EditorUtility.OpenFolderPanel("Select file location", "", "");
+
+            if (string.IsNullOrEmpty(chosenFolder))
+            {
+                return;
+            }
 
             var localFolder = Application.dataPath;
             Debug.Log($"Local path: {localFolder}");
 
             if (localFolder.EndsWith(removeStringFromLocal))
             {
+                Debug.Log($"Reduntand 'Assets/' path removed from new folder path. Resulting path: {localFolder}");
                 localFolder = localFolder.Substring(0, localFolder.Length - removeStringFromLocal.Length);
             }
 
-            Debug.Log($"Reduntand 'Assets/' path removed from new folder path. Resulting path: {localFolder}");
             Debug.Log($"New folder set to: {chosenFolder}");
-            m_TextField.value = chosenFolder.Substring(localFolder.Length);
+
+            chosenFolder = RemovePrefixFromString(chosenFolder.Substring(localFolder.Length));
+
+            m_TextField.value = chosenFolder;
             
+        }
+
+        private string RemovePrefixFromString(string text)
+        {
+            if (text.StartsWith(prefix))
+            {
+                return text.Substring(prefix.Length);
+            }
+
+           return text;
         }
 
 

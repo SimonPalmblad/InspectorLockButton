@@ -15,10 +15,6 @@ public class ClassStatsEditor : Editor
     public VisualTreeAsset VisualTree;
     private SerializedProperty m_EditingLockedProp;
 
-    private VisualElement m_AttributesElem;
-    private VisualElement m_MainElem;
-
-
 
     private void OnEnable()
     {

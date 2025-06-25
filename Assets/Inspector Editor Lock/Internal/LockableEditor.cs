@@ -12,7 +12,9 @@ namespace EditorLock
         public UnityEngine.UIElements.VisualTreeAsset VisualTree;
         private SerializedProperty m_EditorLockedProps;
 
-        private void OnEnable()
+        // this is prone to errors as any editor will want to override OnEnable
+
+        protected void OnEnable()
         {
             InitializeLockableEditor();
         }

@@ -4,14 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
-using Editorlock;
-using UnityEngine.Experimental.AI;
-using static PlasticPipe.PlasticProtocol.Messages.Serialization.ItemHandlerMessagesSerialization;
 
 namespace EditorLock
-{
-    
-
+{   
     public static class LockTargetStyle
     {
         public static StyleSheet lockedStyle = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Inspector Editor Lock/UI/USS/LockedButton.uss");
@@ -120,46 +115,40 @@ namespace EditorLock
         {
 
 
-            //#region Set padding
-            //visualElement.style.paddingBottom = LockTargetStyle.ElementPadding;
-            //visualElement.style.paddingTop = LockTargetStyle.ElementPadding;
-            //visualElement.style.paddingLeft = LockTargetStyle.ElementPadding;
-            //visualElement.style.paddingRight = LockTargetStyle.ElementPadding;
-            //#endregion
+            #region Set padding
+            visualElement.style.paddingBottom = LockTargetStyle.ElementPadding;
+            visualElement.style.paddingTop = LockTargetStyle.ElementPadding;
+            visualElement.style.paddingLeft = LockTargetStyle.ElementPadding;
+            visualElement.style.paddingRight = LockTargetStyle.ElementPadding;
+            #endregion
 
-            //#region Set border color
-            //Color borderColor = m_EditorLockedProp.boolValue ? LockTargetStyle.UnlockedColor
-            //                           : LockTargetStyle.LockedColor;
+            #region Set border color
+            Color borderColor = m_EditorLockedProp.boolValue ? LockTargetStyle.UnlockedColor
+                                       : LockTargetStyle.LockedColor;
 
-            //visualElement.style.borderBottomColor = borderColor;
-            //visualElement.style.borderTopColor = borderColor;
-            //visualElement.style.borderLeftColor = borderColor;
-            //visualElement.style.borderRightColor = borderColor;
-            //#endregion
+            visualElement.style.borderBottomColor = borderColor;
+            visualElement.style.borderTopColor = borderColor;
+            visualElement.style.borderLeftColor = borderColor;
+            visualElement.style.borderRightColor = borderColor;
+            #endregion
 
-            //#region Set border width
+            #region Set border width
 
-            ////float borderWidth = m_EditorLocked ? EditorLockBorderStyle.ActiveBorderWidth
-            ////                                   : EditorLockBorderStyle.DisabledBorderWidth;
+            visualElement.style.borderBottomWidth = LockTargetStyle.ActiveBorderWidth;
+            visualElement.style.borderTopWidth = LockTargetStyle.ActiveBorderWidth;
+            visualElement.style.borderLeftWidth = LockTargetStyle.ActiveBorderWidth;
+            visualElement.style.borderRightWidth = LockTargetStyle.ActiveBorderWidth;
+            #endregion
 
-            //visualElement.style.borderBottomWidth = LockTargetStyle.ActiveBorderWidth;
-            //visualElement.style.borderTopWidth = LockTargetStyle.ActiveBorderWidth;
-            //visualElement.style.borderLeftWidth = LockTargetStyle.ActiveBorderWidth;
-            //visualElement.style.borderRightWidth = LockTargetStyle.ActiveBorderWidth;
-            //#endregion
+            #region Set border radius
+            visualElement.style.borderBottomLeftRadius = LockTargetStyle.BorderRadius;
+            visualElement.style.borderBottomRightRadius = LockTargetStyle.BorderRadius;
+            visualElement.style.borderTopLeftRadius = LockTargetStyle.BorderRadius;
+            
+            visualElement.style.borderTopRightRadius = 0f;
+            #endregion
 
-            //#region Set border radius
-            //visualElement.style.borderBottomLeftRadius = LockTargetStyle.BorderRadius;
-            //visualElement.style.borderBottomRightRadius = LockTargetStyle.BorderRadius;
-            //visualElement.style.borderTopLeftRadius = LockTargetStyle.BorderRadius;
-            //visualElement.style.borderTopRightRadius = 0f;
-            //#endregion
-
-            //LockButton.style.backgroundColor = borderColor;
-
-            visualElement.styleSheets.Clear();
-             visualElement.styleSheets.Add(m_EditorLockedProp.boolValue ? LockTargetStyle.GetUnlockedStyle 
-                                                                        : LockTargetStyle.GetLockedStyle);
+            LockButton.style.backgroundColor = borderColor;
         }
 
         private void ToggleLockedElements()

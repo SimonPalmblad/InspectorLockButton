@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cff524be83ab1b04ebdcd82c72b847a4, type: 3}
   m_Name: BardClass
   m_EditorClassIdentifier: 
-  m_EditingLocked: 1
+  m_EditingLocked: 0
   Class: 2
-  Health: 123123
+  Health: 12
   MoveSpeed: 444
   Arms: 5
   Teeth: 8

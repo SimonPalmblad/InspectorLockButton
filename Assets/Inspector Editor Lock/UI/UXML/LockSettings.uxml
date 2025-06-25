@@ -1,10 +1,13 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Inspector%20Editor%20Lock/UI/USS/EditorLockButtonStyle.uss?fileID=7433441132597879392&amp;guid=f21b008cb8aacb3459a981fe3e15a147&amp;type=3#EditorLockButtonStyle" />
     <engine:Label text="⚙ Editor Lock Global settings" name="Title" style="margin-top: 8px; font-size: 16px;" />
-    <EditorLock.EditorLockElement>
-        <EditorLock.FolderPathSelection label-text="Default Asset Path" bind-to-editor-property="DefaultAssetPath" name="RootFolderPath" default-path="Scripts" prefix="Assets/" />
-        <engine:Label text="Styling " name="Subsection" style="margin-top: 8px; font-size: 14px; margin-bottom: 6px; margin-left: 4px;" />
-        <editor:ColorField label="Unlocked Color" value="#00FFFFFF" name="UnlockedCol" />
-        <editor:ColorField label="Locked Color" value="#00FFFFFF" name="LockedCol" />
-        <engine:Slider label="Locked Opacity" value="42" high-value="1" enabled="true" fill="true" direction="Horizontal" name="LockedOpacity" />
+    <EditorLock.EditorLockElement class="lock-element-styling">
+        <engine:Label text="Styling " name="Subsection" class="lock-settings-heading" />
+        <editor:ColorField label="Unlocked Color" value="#00FFFFFF" name="UnlockedCol" binding-path="UnlockedColor" />
+        <editor:ColorField label="Locked Color" value="#00FFFFFF" name="LockedCol" binding-path="LockedColor" />
+        <engine:Slider label="Locked Opacity" value="42" high-value="1" enabled="true" fill="true" direction="Horizontal" name="LockedOpacity" binding-path="LockedOpacity" show-input-field="true" />
+        <engine:Label text="Create Asset Option" name="Subsection" class="lock-settings-heading" />
+        <EditorLock.FolderPathSelection />
+        <engine:Button text="Reset To Default" name="Reset" />
     </EditorLock.EditorLockElement>
 </engine:UXML>
