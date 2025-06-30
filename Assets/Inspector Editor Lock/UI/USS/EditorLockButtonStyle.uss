@@ -1,4 +1,11 @@
-.lock-styling-default {
+.lock-settings-heading {
+    margin-top: 16px;
+    font-size: 14px;
+    margin-bottom: 6px;
+    margin-left: 4px;
+}
+
+.button-styling-locked {
     border-top-width: 0;
     border-right-width: 0;
     border-bottom-width: 0;
@@ -24,9 +31,54 @@
     background-color: rgb(69, 96, 86);
 }
 
-.lock-settings-heading {
-    margin-top: 16px;
-    font-size: 14px;
-    margin-bottom: 6px;
-    margin-left: 4px;
+.button-styling-unlocked {
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    -unity-background-scale-mode: scale-to-fit;
+    max-width: 20px;
+    max-height: 20px;
+    padding-bottom: 4px;
+    margin-bottom: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 3px;
+    padding-top: 2px;
+    padding-right: 2px;
+    padding-left: 6px;
+    rotate: 0;
+    margin-top: -4px;
+    margin-right: -4px;
+    margin-left: 0;
+    align-self: flex-end;
+    align-content: center;
+    background-color: rgb(69, 96, 86);
+}
+
+.element-styling-locked {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top-width: 6px;
+    border-right-width: 6px;
+    border-bottom-width: 6px;
+    border-left-width: 6px;
+    border-left-color: rgb(62, 255, 0);
+    border-right-color: rgb(62, 255, 0);
+    border-top-color: rgb(62, 255, 0);
+    border-bottom-color: rgb(62, 255, 0);
+}
+
+.element-styling-unlocked {
+    border-top-width: 6px;
+    border-right-width: 6px;
+    border-bottom-width: 6px;
+    border-left-width: 6px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 }

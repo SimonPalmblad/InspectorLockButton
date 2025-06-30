@@ -20,7 +20,6 @@ namespace EditorLock
         }
     }
 
-
     public class AssetCreationWindow : EditorWindow
     {
         [SerializeField]

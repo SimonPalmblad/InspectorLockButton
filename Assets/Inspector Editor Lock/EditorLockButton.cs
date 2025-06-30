@@ -56,7 +56,8 @@ namespace EditorLock
 
         protected VisualElement m_LockTargetElements;
 
-        public UnityEngine.UIElements.Button LockButton;
+        public VisualElement LockElement;
+        public Button LockButton;
 
 
         private void Init()
@@ -70,7 +71,6 @@ namespace EditorLock
 
             visualTree.CloneTree(this);
             this.style.marginTop = topMargin;
-            
 
             LockButton = this.Q<Button>(m_LockButtonName);
             LockButton.RegisterCallback<ClickEvent>(ButtonClicked);
@@ -113,42 +113,45 @@ namespace EditorLock
 
         public void ToggleLockedStyle(VisualElement visualElement)
         {
+            //this.Q<VisualElement>().AddToClassList("element-styling-locked");
+            this.Q<VisualElement>().ToggleInClassList("element-styling-locked");
+            this.Q<VisualElement>().ToggleInClassList("element-styling-unlocked");
 
-
-            #region Set padding
-            visualElement.style.paddingBottom = LockTargetStyle.ElementPadding;
-            visualElement.style.paddingTop = LockTargetStyle.ElementPadding;
-            visualElement.style.paddingLeft = LockTargetStyle.ElementPadding;
-            visualElement.style.paddingRight = LockTargetStyle.ElementPadding;
-            #endregion
-
-            #region Set border color
-            Color borderColor = m_EditorLockedProp.boolValue ? LockTargetStyle.UnlockedColor
-                                       : LockTargetStyle.LockedColor;
-
-            visualElement.style.borderBottomColor = borderColor;
-            visualElement.style.borderTopColor = borderColor;
-            visualElement.style.borderLeftColor = borderColor;
-            visualElement.style.borderRightColor = borderColor;
-            #endregion
-
-            #region Set border width
-
-            visualElement.style.borderBottomWidth = LockTargetStyle.ActiveBorderWidth;
-            visualElement.style.borderTopWidth = LockTargetStyle.ActiveBorderWidth;
-            visualElement.style.borderLeftWidth = LockTargetStyle.ActiveBorderWidth;
-            visualElement.style.borderRightWidth = LockTargetStyle.ActiveBorderWidth;
-            #endregion
-
-            #region Set border radius
-            visualElement.style.borderBottomLeftRadius = LockTargetStyle.BorderRadius;
-            visualElement.style.borderBottomRightRadius = LockTargetStyle.BorderRadius;
-            visualElement.style.borderTopLeftRadius = LockTargetStyle.BorderRadius;
             
-            visualElement.style.borderTopRightRadius = 0f;
-            #endregion
+            //#region Set padding
+            //visualElement.style.paddingBottom = LockTargetStyle.ElementPadding;
+            //visualElement.style.paddingTop = LockTargetStyle.ElementPadding;
+            //visualElement.style.paddingLeft = LockTargetStyle.ElementPadding;
+            //visualElement.style.paddingRight = LockTargetStyle.ElementPadding;
+            //#endregion
 
-            LockButton.style.backgroundColor = borderColor;
+            //#region Set border color
+            //Color borderColor = m_EditorLockedProp.boolValue ? LockTargetStyle.UnlockedColor
+            //                           : LockTargetStyle.LockedColor;
+
+            //visualElement.style.borderBottomColor = borderColor;
+            //visualElement.style.borderTopColor = borderColor;
+            //visualElement.style.borderLeftColor = borderColor;
+            //visualElement.style.borderRightColor = borderColor;
+            //#endregion
+
+            //#region Set border width
+
+            //visualElement.style.borderBottomWidth = LockTargetStyle.ActiveBorderWidth;
+            //visualElement.style.borderTopWidth = LockTargetStyle.ActiveBorderWidth;
+            //visualElement.style.borderLeftWidth = LockTargetStyle.ActiveBorderWidth;
+            //visualElement.style.borderRightWidth = LockTargetStyle.ActiveBorderWidth;
+            //#endregion
+
+            //#region Set border radius
+            //visualElement.style.borderBottomLeftRadius = LockTargetStyle.BorderRadius;
+            //visualElement.style.borderBottomRightRadius = LockTargetStyle.BorderRadius;
+            //visualElement.style.borderTopLeftRadius = LockTargetStyle.BorderRadius;
+
+            //visualElement.style.borderTopRightRadius = 0f;
+            //#endregion
+
+            //LockButton.style.backgroundColor = borderColor;
         }
 
         private void ToggleLockedElements()

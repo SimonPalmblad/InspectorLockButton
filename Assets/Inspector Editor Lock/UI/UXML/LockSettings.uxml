@@ -8,6 +8,9 @@
         <engine:Slider label="Locked Opacity" value="42" high-value="1" enabled="true" fill="true" direction="Horizontal" name="LockedOpacity" binding-path="LockedOpacity" show-input-field="true" />
         <engine:Label text="Create Asset Option" name="Subsection" class="lock-settings-heading" />
         <EditorLock.FolderPathSelection />
-        <engine:Button text="Reset To Default" name="Reset" />
     </EditorLock.EditorLockElement>
+    <engine:Button text="Apply Changes" />
+    <engine:Foldout text="Show Reset Button" name="ResetFoldout" view-data-key="m_ResetFoldout" enabled="true" value="false" style="font-size: 16px; margin-top: 6px; margin-bottom: 6px;">
+        <engine:Button text="Reset To Default" name="Reset" style="margin-top: 2px; margin-bottom: 2px; font-size: 16px;" />
+    </engine:Foldout>
 </engine:UXML>

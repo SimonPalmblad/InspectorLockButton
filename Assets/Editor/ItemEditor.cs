@@ -23,7 +23,7 @@ public class ItemEditor : LockableEditor<Item>
 
     private Action<SerializedProperty> updateItemIcon;
 
-    private void OnEnable()
+    private new void OnEnable()
     {
         InitializeLockableEditor();
         m_InventoryIconProp = serializedObject.FindProperty("m_InventoryIcon");
