@@ -9,8 +9,8 @@ namespace Editorlock
         public string Path;
         public Color UnlockedColor;
         public Color LockedColor;
-        public float LockedOpacity;
-         
+        public int BorderWidth;
+        public float LockedOpacity;         
     }
 
     [CreateAssetMenu(fileName = "Editor Lock Settings", menuName = "Lockable Editor")]
@@ -19,13 +19,15 @@ namespace Editorlock
         public string DefaultAssetPath;
         public Color UnlockedColor;
         public Color LockedColor;
+        public float BorderWidth;
         public float LockedOpacity;
 
         public LockSettingsData DefaultLockSettings = new LockSettingsData()
         {
             Path = "Scripts",
-            UnlockedColor = new Color(0.79f, 0.54f, 0.10f, 1f),
-            LockedColor = new Color(0.474f, 89f, 0.8f, 0.2f),
+            UnlockedColor = new Color(0f, 0.42f, 0.29f, 1f),
+            LockedColor = new Color(0.79f, 0.54f, 0.10f, 1f),
+            BorderWidth = 6,
             LockedOpacity = 0.85f
         };
 

@@ -21,6 +21,9 @@ namespace Editorlock
         private SerializedProperty m_UnlockedColorProperty;
         private SerializedProperty m_LockedColorProperty;
         private SerializedProperty m_LockedOpacityProperty;
+        private SerializedProperty m_BorderWidthProperty;
+
+        private Foldout m_ResetFoldout;
 
         private string m_DefaultPathPropertyName;
         // dirty solution
@@ -34,6 +37,7 @@ namespace Editorlock
             m_UnlockedColorProperty = serializedObject.FindProperty(nameof(m_LockSettings.UnlockedColor));
             m_LockedColorProperty = serializedObject.FindProperty(nameof(m_LockSettings.LockedColor));
             m_LockedOpacityProperty = serializedObject.FindProperty(nameof(m_LockSettings.LockedOpacity));
+            m_BorderWidthProperty = serializedObject.FindProperty(nameof(m_LockSettings.BorderWidth));
         }
 
         public override VisualElement CreateInspectorGUI()
@@ -42,7 +46,8 @@ namespace Editorlock
 
             m_FolderSelection = root.Q<FolderPathSelection>();
             root.Q<Button>("Reset").RegisterCallback<ClickEvent>(GetRestoreDefaultSettings);
-            root.Q<Button>("Apply").RegisterCallback<ClickEvent>(UpdateUSSFile);
+            root.Q<Button>("Apply").RegisterCallback<ClickEvent>(ApplyButtonClicked);
+            m_ResetFoldout = root.Q<Foldout>();
 
             if (m_FolderSelection != null)
             {
@@ -54,7 +59,12 @@ namespace Editorlock
             return root;
         }
 
-        private void UpdateUSSFile(ClickEvent evt)
+        private void ApplyButtonClicked(ClickEvent evt)
+        {
+            UpdateUSSFile();
+        }
+
+        private void UpdateUSSFile()
         {
             // Set Locked button color
             var fileData = USSFileParser
@@ -65,41 +75,50 @@ namespace Editorlock
                                     USSFileParser.ColorToUSS(m_LockedColorProperty.colorValue)
                                     );
 
-            // Set Unlocked border color
+            // Set Locked border color
             fileData.EditClassValue("element-styling-locked",
                                     "border-color",
-                                    USSFileParser.ColorToUSS(m_UnlockedColorProperty.colorValue));
+                                    USSFileParser.ColorToUSS(m_LockedColorProperty.colorValue));
+
+
+            // Set Lock opacity - probably different param tho.
+            fileData.EditClassValue("element-styling-locked",
+                                    "opacity",
+                                    m_LockedOpacityProperty.floatValue.ToString("0.00"));
+
+
+            // Set Locked border width
+            fileData.EditClassValue("element-styling-locked",
+                                    "border-width",
+                                    m_BorderWidthProperty.intValue.ToString());
 
             // Set Unlocked button color
             fileData.EditClassValue("button-styling-unlocked",
                                     "background-color",
                                     USSFileParser.ColorToUSS(m_UnlockedColorProperty.colorValue));
 
-            
-            // Set lock opacity - probably different param tho.
-            fileData.EditClassValue("element-styling-locked",
-                                    "opacity",
-                                    m_LockedOpacityProperty.floatValue.ToString("0.00"));
 
-            Debug.Log(fileData.FileContent);
+            // Set Unlocked border width
+            fileData.EditClassValue("element-styling-unlocked",
+                                    "border-width",
+                                    m_BorderWidthProperty.intValue.ToString());
+
+
             USSFileParser.WriteToFile(fileData);
-
         }
 
         private void GetRestoreDefaultSettings(ClickEvent evt)
         {
             var defaultSettings = m_LockSettings.DefaultLockSettings;
-            //var defaultPath = serializedObject.FindProperty("m_DefaultAssetPath");
-            //var defaultUnlockedCol = serializedObject.FindProperty("m_DefaultUnlockedColor");
-            //var defaultLockedCol = serializedObject.FindProperty("m_DefaultLockedColor");
-            //var defaultOpacity = serializedObject.FindProperty("m_DefaultLockedOpacity");
 
             m_DefaultPathProperty.stringValue = defaultSettings.Path;
             m_UnlockedColorProperty.colorValue = defaultSettings.UnlockedColor;
             m_LockedColorProperty.colorValue = defaultSettings.LockedColor;
             m_LockedOpacityProperty.floatValue = defaultSettings.LockedOpacity;
 
+            m_ResetFoldout.value = false;
             serializedObject.ApplyModifiedProperties();
+            //UpdateUSSFile();
 
         }
     }

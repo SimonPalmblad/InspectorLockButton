@@ -1,5 +1,5 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <Style src="project://database/Assets/Inspector%20Editor%20Lock/UI/USS/EditorLockButtonStyle.uss?fileID=7433441132597879392&amp;guid=f21b008cb8aacb3459a981fe3e15a147&amp;type=3#EditorLockButtonStyle" />
+    <Style src="project://database/Assets/Inspector%20Editor%20Lock/UI/USS/LockSettingsStyle.uss?fileID=7433441132597879392&amp;guid=31bd9a5a0f5cb3a408ed3e445aa3ddc1&amp;type=3#LockSettingsStyle" />
     <engine:Label text="⚙ Editor Lock Global settings" name="Title" style="margin-top: 8px; font-size: 16px;" />
     <EditorLock.EditorLockElement class="lock-element-styling">
         <engine:Label text="Styling " name="Subsection" class="lock-settings-heading" />
@@ -9,8 +9,8 @@
         <engine:Label text="Create Asset Option" name="Subsection" class="lock-settings-heading" />
         <EditorLock.FolderPathSelection />
     </EditorLock.EditorLockElement>
-    <engine:Button text="Apply Changes" name="Apply" />
+    <engine:Button text="Apply Changes" name="Apply" class="settings-button-styling" />
     <engine:Foldout text="Show Reset Button" name="ResetFoldout" view-data-key="m_ResetFoldout" enabled="true" value="false" style="font-size: 16px; margin-top: 6px; margin-bottom: 6px;">
-        <engine:Button text="Reset To Default" name="Reset" style="margin-top: 2px; margin-bottom: 2px; font-size: 16px;" />
+        <engine:Button text="Reset To Default" name="Reset" class="settings-button-styling" />
     </engine:Foldout>
 </engine:UXML>

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -154,11 +155,13 @@ namespace EditorLockUtilies
         {
             if (!File.Exists(filePath))
             {
+                Debug.LogWarning($"FilePath {filePath} is not valid. Could not write to file.");
                 return;
             }
 
             File.WriteAllText(filePath, fileContent);
             Debug.Log($"SUCCESS! Wrote to file in path: {filePath}");
+            AssetDatabase.Refresh();
         }
 
         public static void WriteToFile(USSFileData data)
@@ -169,8 +172,7 @@ namespace EditorLockUtilies
                 return;
             }
 
-            File.WriteAllText(data.FilePath, data.FileContent);
-            Debug.Log($"SUCCESS! Wrote to file in path: {data.FilePath}");
+            WriteToFile(data.FilePath, data.FileContent);
         }
 
         public static string ColorToUSS(Color color)
@@ -179,7 +181,7 @@ namespace EditorLockUtilies
 
             StringBuilder result = new StringBuilder();
             
-            result.Append($"rbga(")
+            result.Append($"rgba(")
                   .Append($"{color32.r}, ")
                   .Append($"{color32.g}, ")
                   .Append($"{color32.b}, ")
