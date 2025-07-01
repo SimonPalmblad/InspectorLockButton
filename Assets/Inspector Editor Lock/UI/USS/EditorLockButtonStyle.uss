@@ -23,12 +23,12 @@
     padding-right: 2px;
     padding-left: 6px;
     rotate: 0;
-    margin-top: -4px;
+    margin-top: -2px;
     margin-right: -4px;
     margin-left: 0;
     align-self: flex-end;
     align-content: center;
-    background-color: rgba(26, 201, 87, 1.00);
+    background-color: rgba(201, 138, 26, 1.00);
 }
 
 .button-styling-unlocked {
@@ -49,24 +49,24 @@
     padding-right: 2px;
     padding-left: 6px;
     rotate: 0;
-    margin-top: -4px;
+    margin-top: -2px;
     margin-right: -4px;
     margin-left: 0;
     align-self: flex-end;
     align-content: center;
-    background-color: rgba(165, 165, 165, 1.00);
+    background-color: rgba(74, 74, 74, 1.00);
 }
 
 .element-styling-locked {
-    border-width: 6px;
+    border-width: 2px;
     border-radius: 3px;
-    border-color: rgba(26, 201, 87, 1.00);
+    border-color: rgba(201, 138, 26, 1.00);
     opacity: 0.85;
 }
 
 .element-styling-unlocked {
-    border-width: 6px;
+    border-width: 2px;
     border-radius: 3px;
-    border-color: rgba(61, 45, 88, 0);
+    border-color: rgba(74, 74, 74, 1.00);
     opacity: 1;
 }

@@ -49,7 +49,7 @@ namespace EditorLock
         }
 
         [UxmlAttribute]
-        public float topMargin { get; set; } = 9f;
+        public float topMargin { get; set; } = 2f;
 
         [UxmlAttribute]
         public VisualTreeAsset visualTree;
@@ -70,11 +70,18 @@ namespace EditorLock
             elementsToIgnore = new List<string>() { m_LockElemName, m_LockButtonName };
 
             visualTree.CloneTree(this);
-            this.style.marginTop = topMargin;
+           
 
             LockButton = this.Q<Button>(m_LockButtonName);
             LockButton.RegisterCallback<ClickEvent>(ButtonClicked);
 
+            this.schedule.Execute(LateUXMLAttributeUpdate).ExecuteLater(10);
+
+        }
+
+        private void LateUXMLAttributeUpdate()
+        {
+            this.style.marginTop = topMargin;
         }
 
 

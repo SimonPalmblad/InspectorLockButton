@@ -10,7 +10,16 @@ namespace Editorlock
         public Color UnlockedColor;
         public Color LockedColor;
         public int BorderWidth;
-        public float LockedOpacity;         
+        public float LockedOpacity;
+
+        public static LockSettingsData DefaultLockSettings = new LockSettingsData()
+        {
+            Path = "Scripts",
+            UnlockedColor = new Color(0.29f, 0.29f, 0.29f, 1f),
+            LockedColor = new Color(0.79f, 0.54f, 0.10f, 1f),
+            BorderWidth = 2,
+            LockedOpacity = 0.85f
+        };
     }
 
     [CreateAssetMenu(fileName = "Editor Lock Settings", menuName = "Lockable Editor")]
@@ -19,17 +28,11 @@ namespace Editorlock
         public string DefaultAssetPath;
         public Color UnlockedColor;
         public Color LockedColor;
-        public float BorderWidth;
+        public int BorderWidth;
         public float LockedOpacity;
 
-        public LockSettingsData DefaultLockSettings = new LockSettingsData()
-        {
-            Path = "Scripts",
-            UnlockedColor = new Color(0f, 0.42f, 0.29f, 1f),
-            LockedColor = new Color(0.79f, 0.54f, 0.10f, 1f),
-            BorderWidth = 6,
-            LockedOpacity = 0.85f
-        };
+        public LockSettingsData DefaultLockSettings = LockSettingsData.DefaultLockSettings;
+        public LockSettingsData PreviousLockSettings = LockSettingsData.DefaultLockSettings;
 
         [SerializeField]
         private bool[] m_LockableStates;

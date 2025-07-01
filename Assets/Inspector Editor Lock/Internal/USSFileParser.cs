@@ -101,6 +101,11 @@ namespace EditorLockUtilies
             return newDataContent;
         }
 
+        public static USSFileData EditClassPixelValue(this USSFileData data, string className, string valueName, int newPixelValue)
+        {
+            return EditClassValue(data, className, valueName, $"{newPixelValue.ToString()}px");            
+        }
+
         private static USSFileData ReplaceValueInUSSClass(USSFileData data, string newValue, int startIndex, int startOffset, int endOffset)
         {
             var newFileContent = data.FileContent.Remove(startIndex + startOffset, endOffset - (startOffset));

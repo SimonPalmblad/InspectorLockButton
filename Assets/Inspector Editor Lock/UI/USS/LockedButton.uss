@@ -19,6 +19,6 @@
     align-content: center;
     
     opacity: 0.85;
-    border-width: 4;
+    border-width: 4px;
     background-color: rgb(121, 227, 204);
 }
