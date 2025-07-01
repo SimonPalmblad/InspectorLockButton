@@ -13,12 +13,12 @@ namespace Editorlock
     public class EditorLockSettingsEditor: LockableEditor<EditorLockSettings>
     {
         private string m_USSFileLocation = "Assets/Inspector Editor Lock/UI/USS/EditorLockButtonStyle.uss";
-        private bool m_UnappliedSettings = false;
+        private bool listenToEventChanges = false;
 
+        private VisualElement m_Root;
         private VisualElement m_UnappliedChangesElem;
         private FolderPathSelection m_FolderSelection;
         private EditorLockSettings m_LockSettings;
-        private Foldout m_ResetFoldout;
 
         #region Serialiation
         private string m_DefaultPathPropertyName;
@@ -45,26 +45,25 @@ namespace Editorlock
             m_LockedOpacityProperty = serializedObject.FindProperty(nameof(m_LockSettings.LockedOpacity));
             m_BorderWidthProperty = serializedObject.FindProperty(nameof(m_LockSettings.BorderWidth));
 
-            m_PreviousLockSettings = serializedObject.FindProperty(nameof(m_LockSettings.PreviousLockSettings));
+            m_PreviousLockSettings = serializedObject.FindProperty("PreviousLockSettings");
         }
 
         public override VisualElement CreateInspectorGUI()
         {
-            var root = base.CreateInspectorGUI();
+            m_Root = base.CreateInspectorGUI();
 
-            m_FolderSelection = root.Q<FolderPathSelection>();
-            m_UnappliedChangesElem = root.Q<VisualElement>("UnappliedChangesElem");
+            m_FolderSelection = m_Root.Q<FolderPathSelection>();
+            m_UnappliedChangesElem = m_Root.Q<VisualElement>("UnappliedChangesElem");
 
-            root.Q<Button>("ApplyButton").RegisterCallback<ClickEvent>(ApplyButtonClicked);
-            root.Q<Button>("DiscardButton").RegisterCallback<ClickEvent>(DiscardButtonClicked);
-            root.Q<Button>("ResetButton").RegisterCallback<ClickEvent>(RestoreDefaultSettings);
+            m_Root.Q<Button>("ApplyButton").RegisterCallback<ClickEvent>(ApplyButtonClicked);
+            m_Root.Q<Button>("DiscardButton").RegisterCallback<ClickEvent>(DiscardButtonClicked);
+            m_Root.Q<Button>("ResetButton").RegisterCallback<ClickEvent>(RestoreDefaultSettings);
    
-            root.RegisterCallback<ChangeEvent<float>>(ChangesRegistered);
-            root.RegisterCallback<ChangeEvent<int>>(ChangesRegistered);
-            root.RegisterCallback<ChangeEvent<Color>>(ChangesRegistered);
-            root.RegisterCallback<ChangeEvent<string>>(ChangesRegistered);
+            m_Root.RegisterCallback<ChangeEvent<float>>(ChangesRegistered);
+            m_Root.RegisterCallback<ChangeEvent<int>>(ChangesRegistered);
+            m_Root.RegisterCallback<ChangeEvent<Color>>(ChangesRegistered);
+            m_Root.RegisterCallback<ChangeEvent<string>>(ChangesRegistered);
 
-            m_ResetFoldout = root.Q<Foldout>();
 
             if (m_FolderSelection != null)
             {
@@ -73,7 +72,8 @@ namespace Editorlock
                 m_FolderSelection.SetDefaultPath("Scripts");
             }
 
-            return root;
+            ListenToEventChangeCallbacks(500);
+            return m_Root;
         }
 
         private void DiscardButtonClicked(ClickEvent evt)
@@ -89,54 +89,72 @@ namespace Editorlock
         #region Event Change Callbacks
         private void ChangesRegistered(ChangeEvent<float> evt)
         {
-            UnappliedChanges();
-            //Debug.Log($"Change event of type float with value '{evt.newValue}' registered.");
+            //// avoid events
+            //if(evt.newValue > 1)
+            //{
+            //    return;
+            //}
+
+            UnappliedChanges(evt.newValue);
         }
 
         private void ChangesRegistered(ChangeEvent<int> evt)
         {
-            UnappliedChanges();
-            //Debug.Log($"Change event of type int with value '{evt.newValue}' registered.");
+            UnappliedChanges(evt.newValue);
         }
 
         private void ChangesRegistered(ChangeEvent<Color> evt)
         {
-            UnappliedChanges();
-            //Debug.Log($"Change event of type color with value '{evt.newValue}' registered.");
+            UnappliedChanges(evt.newValue);
         }
 
         private void ChangesRegistered(ChangeEvent<string> evt)
         {
-            UnappliedChanges();
-            //Debug.Log($"Change event of type string with value '{evt.newValue}' registered.");
+            UnappliedChanges(evt.newValue);
         } 
 
-        private void UnappliedChanges()
+        private void UnappliedChanges<T>(T changeType)
         {
+
+            if(!listenToEventChanges) 
+                return;
+
+            listenToEventChanges = false;
+
+            Debug.Log($"Change event of type {typeof(T)} with value '{changeType}' registered.");
             m_UnappliedChangesElem.style.display = DisplayStyle.Flex;
-            m_UnappliedSettings = true;
+
 
         }
         #endregion
 
+        private void ListenToEventChangeCallbacks(long delay) 
+        {
+            listenToEventChanges = false;
+            m_Root.schedule.Execute(() => listenToEventChanges = true).ExecuteLater(delay);
+        }
+
+
         private void ApplyChanges()
         {
             // Add check to see if update was successful or not
+            listenToEventChanges = false;
             
-            UpdateUSSFile();
-            
+            UpdateUSSFile();            
             m_UnappliedChangesElem.style.display = DisplayStyle.None;
-            m_UnappliedSettings = false;
             SetPreviousUpdateSettings();
-
             serializedObject.ApplyModifiedProperties();
+
+            ListenToEventChangeCallbacks(2000);
+            //code
         }
 
         private void RevertChanges()
-        {
+        {            
             SetLockSettings(m_LockSettings.PreviousLockSettings);
             m_UnappliedChangesElem.style.display = DisplayStyle.None;
-            m_UnappliedSettings = false;
+
+            ListenToEventChangeCallbacks(100);
         }
 
         /// <summary>
@@ -200,13 +218,20 @@ namespace Editorlock
 
         private void SetPreviousUpdateSettings()
         {
-            m_PreviousLockSettings.FindPropertyRelative("Path").stringValue = m_DefaultPathProperty.stringValue;
-            m_PreviousLockSettings.FindPropertyRelative("UnlockedColor").colorValue = m_UnlockedColorProperty.colorValue;
-            m_PreviousLockSettings.FindPropertyRelative("LockedColor").colorValue = m_LockedColorProperty.colorValue;
-            m_PreviousLockSettings.FindPropertyRelative("LockedOpacity").floatValue = m_LockedOpacityProperty.floatValue;
-            m_PreviousLockSettings.FindPropertyRelative("BorderWidth").intValue = m_BorderWidthProperty.intValue;
-            
+            var path = m_PreviousLockSettings.FindPropertyRelative("Path");
+            var lockedCol = m_PreviousLockSettings.FindPropertyRelative("LockedColor");
+            var unlockedCol = m_PreviousLockSettings.FindPropertyRelative("UnlockedColor");
+            var borderWidth = m_PreviousLockSettings.FindPropertyRelative("BorderWidth");
+            var lockedOpacity = m_PreviousLockSettings.FindPropertyRelative("LockedOpacity");            
+
+            path.stringValue = m_DefaultPathProperty?.stringValue ?? path.stringValue;
+            lockedCol.colorValue = m_LockedColorProperty?.colorValue ?? lockedCol.colorValue;
+            unlockedCol.colorValue = m_UnlockedColorProperty?.colorValue ?? unlockedCol.colorValue;
+            lockedOpacity.floatValue = m_LockedOpacityProperty?.floatValue ?? lockedOpacity.floatValue;
+            borderWidth.intValue = m_BorderWidthProperty?.intValue ?? borderWidth.intValue;
+
             serializedObject.ApplyModifiedProperties();
+
         }
 
         private void SetLockSettings(LockSettingsData settings)
@@ -215,7 +240,7 @@ namespace Editorlock
             m_UnlockedColorProperty.colorValue = settings.UnlockedColor;
             m_LockedColorProperty.colorValue = settings.LockedColor;
             m_LockedOpacityProperty.floatValue = settings.LockedOpacity;
-            m_BorderWidthProperty.floatValue = settings.BorderWidth;
+            m_BorderWidthProperty.intValue = settings.BorderWidth;
 
             serializedObject.ApplyModifiedProperties();
         }
@@ -223,11 +248,8 @@ namespace Editorlock
         private void RestoreDefaultSettings(ClickEvent evt)
         {
             SetLockSettings(m_LockSettings.DefaultLockSettings);
-            serializedObject.ApplyModifiedProperties();
+            UnappliedChanges(evt.actionKey);
 
-            UnappliedChanges();
-
-            m_ResetFoldout.value = false;
         }
     }
 }

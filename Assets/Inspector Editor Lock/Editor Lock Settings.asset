@@ -10,11 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85558db368a476d4483ebdf95e4fdaeb, type: 3}
-  m_Name: LockSettings
+  m_Name: Editor Lock Settings
   m_EditorClassIdentifier: 
   DefaultAssetPath: Scripts
   UnlockedColor: {r: 0.29, g: 0.29, b: 0.29, a: 1}
-  LockedColor: {r: 0.79, g: 0.54, b: 0.1, a: 1}
+  LockedColor: {r: 0.81886786, g: 0.45948926, b: 0.1467781, a: 1}
   BorderWidth: 2
   LockedOpacity: 0.85
+  DefaultLockSettings:
+    Path: Scripts
+    UnlockedColor: {r: 0.29, g: 0.29, b: 0.29, a: 1}
+    LockedColor: {r: 0.79, g: 0.54, b: 0.1, a: 1}
+    BorderWidth: 2
+    LockedOpacity: 0.85
+  PreviousLockSettings:
+    Path: Scripts
+    UnlockedColor: {r: 0.29, g: 0.29, b: 0.29, a: 1}
+    LockedColor: {r: 0.81886786, g: 0.45948926, b: 0.1467781, a: 1}
+    BorderWidth: 2
+    LockedOpacity: 0.85
   m_LockableStates: 
