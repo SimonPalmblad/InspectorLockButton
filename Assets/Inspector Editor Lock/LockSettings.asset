@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LockSettings
   m_EditorClassIdentifier: 
   DefaultAssetPath: Scripts
-  UnlockedColor: {r: 0.79, g: 0.54, b: 0.1, a: 1}
+  UnlockedColor: {r: 0.035848916, g: 1, b: 0.49919268, a: 0.7607843}
   LockedColor: {r: 0.474, g: 89, b: 0.8, a: 0.2}
   LockedOpacity: 0.85
   m_LockableStates: 

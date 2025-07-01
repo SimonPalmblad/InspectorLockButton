@@ -1,12 +1,13 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace EditorLockUtilies
 {
-    public static class USSFileEditorHelper
+    public static class USSFileParser
     {
         public static string EditValueInUSSClass(string filePath, string className, string valueName, string newValue)
         {
@@ -81,6 +82,22 @@ namespace EditorLockUtilies
 
             File.WriteAllText(filePath, fileContent);
             Console.WriteLine($"SUCCESS! Wrote to file in path: {filePath}");
+        }
+
+        public static string ColorToUSS(Color color)
+        {
+            Color32 color32 = color;
+
+            StringBuilder result = new StringBuilder();
+            
+            result.Append($"rbga(")
+                  .Append($"{color32.r}, ")
+                  .Append($"{color32.g}, ")
+                  .Append($"{color32.b}, ")
+                  .Append(color.a.ToString("0.00"))
+                  .Append(")");
+
+            return result.ToString();            
         }
     }
 }

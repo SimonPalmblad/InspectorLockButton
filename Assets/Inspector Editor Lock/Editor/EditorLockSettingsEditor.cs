@@ -42,7 +42,7 @@ namespace Editorlock
 
             m_FolderSelection = root.Q<FolderPathSelection>();
             root.Q<Button>("Reset").RegisterCallback<ClickEvent>(GetRestoreDefaultSettings);
-            root.Q<Button>("Apply").RegisterCallback<ClickEvent>(GetUpdateUSSFile);
+            root.Q<Button>("Apply").RegisterCallback<ClickEvent>(UpdateUSSFile);
 
             if (m_FolderSelection != null)
             {
@@ -54,15 +54,41 @@ namespace Editorlock
             return root;
         }
 
-        private void GetUpdateUSSFile(ClickEvent evt)
+        private void UpdateUSSFile(ClickEvent evt)
         {
-            string fileContent = USSFileEditorHelper
+            //var alpha = m_LockedColorProperty.colorValue.a;
+            //Color32 color32 = m_LockedColorProperty.colorValue;
+
+            //Debug.Log($"USS friendly color: {color32.r}, {color32.g}, {color32.b}, {alpha}");
+            Debug.Log($"Locked color result: {USSFileParser.ColorToUSS(m_LockedColorProperty.colorValue)}");
+            Debug.Log($"Unlocked color result: {USSFileParser.ColorToUSS(m_UnlockedColorProperty.colorValue)}");
+
+
+            string fileContent = USSFileParser
                                 .EditValueInUSSClass(
-                                    m_USSFileLocation, 
-                                    "button-styling-locked", 
-                                    "background-color", 
-                                    m_LockedColorProperty.colorValue.ToString()
+                                    m_USSFileLocation,
+                                    "button-styling-locked",
+                                    "background-color",
+                                    USSFileParser.ColorToUSS(m_LockedColorProperty.colorValue)
                                     );
+
+
+            fileContent = USSFileParser
+                           .EditValueInUSSClass(
+                               m_USSFileLocation,
+                               "button-styling-unlocked",
+                               "background-color",
+                               USSFileParser.ColorToUSS(m_LockedColorProperty.colorValue)
+                               );
+
+
+            fileContent = USSFileParser
+                           .EditValueInUSSClass(
+                               m_USSFileLocation,
+                               "element-styling-locked",
+                               "opacity",
+                               USSFileParser.ColorToUSS(m_LockedColorProperty.colorValue)
+                               );
         }
 
         private void GetRestoreDefaultSettings(ClickEvent evt)
