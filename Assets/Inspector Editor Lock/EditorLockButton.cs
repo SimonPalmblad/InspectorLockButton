@@ -113,11 +113,28 @@ namespace EditorLock
 
         public void ToggleLockedStyle(VisualElement visualElement)
         {
-            //this.Q<VisualElement>().AddToClassList("element-styling-locked");
-            this.Q<VisualElement>().ToggleInClassList("element-styling-locked");
-            this.Q<VisualElement>().ToggleInClassList("element-styling-unlocked");
 
-            
+            if (m_EditorLockedProp.boolValue)
+            {
+                this.Q<VisualElement>().AddToClassList("element-styling-locked");                
+                this.Q<VisualElement>().RemoveFromClassList("element-styling-unlocked");
+                
+                LockButton.AddToClassList("button-styling-locked");
+                LockButton.RemoveFromClassList("button-styling-unlocked");
+            }
+
+            else
+            {
+                this.Q<VisualElement>().AddToClassList("element-styling-unlocked");
+                this.Q<VisualElement>().RemoveFromClassList("element-styling-locked");
+
+                LockButton.AddToClassList("button-styling-unlocked");
+                LockButton.RemoveFromClassList("button-styling-locked");
+            }
+            //this.Q<VisualElement>().AddToClassList("element-styling-locked");
+            //this.Q<VisualElement>().ToggleInClassList("element-styling-locked");
+            //this.Q<VisualElement>().ToggleInClassList("element-styling-unlocked");
+
             //#region Set padding
             //visualElement.style.paddingBottom = LockTargetStyle.ElementPadding;
             //visualElement.style.paddingTop = LockTargetStyle.ElementPadding;

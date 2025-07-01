@@ -56,15 +56,8 @@ namespace Editorlock
 
         private void UpdateUSSFile(ClickEvent evt)
         {
-            //var alpha = m_LockedColorProperty.colorValue.a;
-            //Color32 color32 = m_LockedColorProperty.colorValue;
-
-            //Debug.Log($"USS friendly color: {color32.r}, {color32.g}, {color32.b}, {alpha}");
-            Debug.Log($"Locked color result: {USSFileParser.ColorToUSS(m_LockedColorProperty.colorValue)}");
-            Debug.Log($"Unlocked color result: {USSFileParser.ColorToUSS(m_UnlockedColorProperty.colorValue)}");
-
-
-            string fileContent = USSFileParser
+            // Set Locked button color
+            var fileData = USSFileParser
                                 .EditValueInUSSClass(
                                     m_USSFileLocation,
                                     "button-styling-locked",
@@ -72,23 +65,25 @@ namespace Editorlock
                                     USSFileParser.ColorToUSS(m_LockedColorProperty.colorValue)
                                     );
 
+            // Set Unlocked border color
+            fileData.EditClassValue("element-styling-locked",
+                                    "border-color",
+                                    USSFileParser.ColorToUSS(m_UnlockedColorProperty.colorValue));
 
-            fileContent = USSFileParser
-                           .EditValueInUSSClass(
-                               m_USSFileLocation,
-                               "button-styling-unlocked",
-                               "background-color",
-                               USSFileParser.ColorToUSS(m_LockedColorProperty.colorValue)
-                               );
+            // Set Unlocked button color
+            fileData.EditClassValue("button-styling-unlocked",
+                                    "background-color",
+                                    USSFileParser.ColorToUSS(m_UnlockedColorProperty.colorValue));
+
+            
+            // Set lock opacity - probably different param tho.
+            fileData.EditClassValue("element-styling-locked",
+                                    "opacity",
+                                    m_LockedOpacityProperty.floatValue.ToString("0.00"));
 
 
-            fileContent = USSFileParser
-                           .EditValueInUSSClass(
-                               m_USSFileLocation,
-                               "element-styling-locked",
-                               "opacity",
-                               USSFileParser.ColorToUSS(m_LockedColorProperty.colorValue)
-                               );
+
+            //Debug.Log(fileData.FileContent);
         }
 
         private void GetRestoreDefaultSettings(ClickEvent evt)
