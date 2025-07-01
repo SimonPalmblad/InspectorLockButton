@@ -161,6 +161,18 @@ namespace EditorLockUtilies
             Debug.Log($"SUCCESS! Wrote to file in path: {filePath}");
         }
 
+        public static void WriteToFile(USSFileData data)
+        {
+            if (!data.IsValid)
+            {
+                Debug.LogWarning("USSFileData not valid. Could not write to file.");
+                return;
+            }
+
+            File.WriteAllText(data.FilePath, data.FileContent);
+            Debug.Log($"SUCCESS! Wrote to file in path: {data.FilePath}");
+        }
+
         public static string ColorToUSS(Color color)
         {
             Color32 color32 = color;

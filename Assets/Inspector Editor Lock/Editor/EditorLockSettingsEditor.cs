@@ -81,9 +81,9 @@ namespace Editorlock
                                     "opacity",
                                     m_LockedOpacityProperty.floatValue.ToString("0.00"));
 
+            Debug.Log(fileData.FileContent);
+            USSFileParser.WriteToFile(fileData);
 
-
-            //Debug.Log(fileData.FileContent);
         }
 
         private void GetRestoreDefaultSettings(ClickEvent evt)
