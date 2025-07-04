@@ -1,14 +1,12 @@
-using System.Collections.Generic;
 using System.Text;
 
 namespace ScriptFileCreation
 {
-    
     public class ScriptBuilder
     {
         private StringBuilder m_Inheritance = new StringBuilder(string.Empty);
         private StringBuilder m_Using = new StringBuilder(string.Empty);
-        
+
         private CodeBlock m_NameSpace;
         private CodeBlock m_Class;
         private CodeBlock m_Code;
@@ -17,24 +15,25 @@ namespace ScriptFileCreation
 
         public ScriptBuilder(string fileName)
         {
-            m_Class = new CodeBlock(new CodeLine($"public class {StringHelpers.WithoutEnding(fileName)}"));
             m_NameSpace = CodeBlockDefaults.CodeBlockEmpty;
+            m_Class = new CodeBlock(new CodeLine($"public class {StringHelpers.WithoutEnding(fileName)}"));
             m_Code = CodeBlockDefaults.CodeBlockEmpty;
         }
 
+        //TODO Create safety if class name is added after inheritance. It's hard-coded to not be broken since m_Class is assigned in constructor but not a great solution.
         public ScriptBuilder WithInheritance(string inheritance)
         {
-            if(m_Inheritance.ToString() == string.Empty)
+            if (m_Inheritance.ToString() == string.Empty)
             {
                 m_Inheritance.Append($": {inheritance}");
                 return this;
             }
-            
-            m_Inheritance.AppendLine($"{inheritance}, ");
+
+            m_Inheritance.AppendLine($", {inheritance}");
             return this;
         }
 
-        public ScriptBuilder WithInheritance(string[] inheritance) 
+        public ScriptBuilder WithInheritance(string[] inheritance)
         {
             foreach (string argument in inheritance)
             {
@@ -43,7 +42,7 @@ namespace ScriptFileCreation
 
             return this;
         }
-        
+
         /// <summary>
         /// Add a line of code to this instance of the ScriptBuilder.
         /// </summary>
@@ -51,9 +50,9 @@ namespace ScriptFileCreation
         /// <returns>A reference to this instance after the operation has completed.</returns>
         public ScriptBuilder AddCodeLine(string content)
         {
-            content = content.EndsWith(";") ? content.Remove(content.Length -1) 
+            content = content.EndsWith(";") ? content.Remove(content.Length - 1)
                                             : content;
-            
+
             if (m_Code is CodeBlockEmpty)
             {
                 m_Code = new CodeBlock(new CodeLine(content, ";"));
@@ -140,7 +139,8 @@ namespace ScriptFileCreation
         private string AssembleScript()
         {
             m_Class.AddBody(m_Code);
-            
+
+
             var stringBuilder = new StringBuilder();
             if (m_Inheritance.Length > 0)
             {
@@ -148,8 +148,14 @@ namespace ScriptFileCreation
             }
 
             stringBuilder.AppendLine(m_Using.ToString())
-                         .AppendLine(m_NameSpace.ToString());
-            
+                         .AppendLine(m_NameSpace is not CodeBlockEmpty ? m_NameSpace.ToString()
+                                                                       : m_Class.ToString());
+
+            if (m_Class.CodeBody is CodeBlockEmpty)
+            {
+                stringBuilder.AppendLine(m_Class.EmptyCodebody());
+            }
+
             return stringBuilder.ToString();
         }
 

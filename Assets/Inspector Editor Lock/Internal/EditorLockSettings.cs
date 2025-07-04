@@ -33,8 +33,7 @@ namespace Editorlock
                 LockedOpacity = this.LockedOpacity
             };
         }
-    }
-    
+    }    
 
     [CreateAssetMenu(fileName = "Editor Lock Settings", menuName = "Lockable Editor")]
     public class EditorLockSettings: ScriptableObject, IEditorLockable
@@ -51,7 +50,5 @@ namespace Editorlock
         [SerializeField]
         private bool[] m_LockableStates;
         public string LockablePropertyPath => nameof(m_LockableStates);
-
-
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PlasticPipe.PlasticProtocol.Messages;
+using ScriptFileCreation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -7,7 +9,6 @@ using UnityEngine.UIElements;
 
 namespace EditorLock
 {
-
     internal struct TextFieldData
     {
         public TextField TextField;
@@ -54,7 +55,7 @@ namespace EditorLock
         public static void ShowWindow()
         {
             AssetCreationWindow wnd = GetWindow<AssetCreationWindow>();
-            wnd.titleContent = new GUIContent("🔒 New Lockable");
+            wnd.titleContent = new GUIContent("🔒 New Lockable Assets");
         }
 
         public void CreateGUI()
@@ -64,7 +65,6 @@ namespace EditorLock
             m_VisualTreeAsset.CloneTree(root);
 
             #region Query all relevant Elements
-
 
             Toggle nameToggle = root.Q<Toggle>("NameToggle");
             Toggle pathToggle = root.Q<Toggle>("PathToggle");
@@ -135,6 +135,7 @@ namespace EditorLock
             TextField scriptField = new TextField();
             TextField editorField = new TextField();
 
+
             foreach (TextField child in m_UniformNameFields)
             {
                 switch (child.name)
@@ -153,12 +154,27 @@ namespace EditorLock
                 }
             }
 
+            var uxmlDocPath = m_UXMLFolderPathElem.PathFull + "/" + PlaceholderIfEmpty(uxmlField);
 
-            // If not using individual creation
-            CreateLockableObject.CreateLockableAsset(PlaceholderIfEmpty(m_AssetNameField));
-            CreateLockableObject.CreateLockableScript(PlaceholderIfEmpty(scriptField), m_ScriptFolderPathElem.PathFull);
-            CreateLockableObject.CreateLockableEditorScript(PlaceholderIfEmpty(editorField), m_EditorFolderPathElem.PathFull);
+            var newAsset = CreateLockableObject.CreateLockableAsset(PlaceholderIfEmpty(m_AssetNameField));
+
             CreateLockableObject.CreateLockableUXMLDoc(PlaceholderIfEmpty(uxmlField), m_UXMLFolderPathElem.PathFull);
+
+            CreateLockableObject.CreateLockableScript(PlaceholderIfEmpty(scriptField), m_ScriptFolderPathElem.PathFull);            
+
+            CreateLockableObject.CreateLockableEditorScript(PlaceholderIfEmpty(editorField),
+                                                            PlaceholderIfEmpty(scriptField),
+                                                            m_EditorFolderPathElem.PathFull,
+                                                            uxmlDocPath);
+
+            EditorUtility.RequestScriptReload();
+
+            String ScriptName = StringHelpers.WithoutEnding(PlaceholderIfEmpty(scriptField));
+            //We need to fetch the Type
+            System.Type MyScriptType = System.Type.GetType(ScriptName + ",Assembly-CSharp");
+            //Now that we have the Type we can use it to Add Component
+            newAsset.AddComponent(MyScriptType);
+
         }
 
         private string PlaceholderIfEmpty(TextField textField)

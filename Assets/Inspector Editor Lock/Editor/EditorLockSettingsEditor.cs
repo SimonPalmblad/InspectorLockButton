@@ -9,8 +9,8 @@ namespace Editorlock
     [CustomEditor( typeof(EditorLockSettings) )]
     public class EditorLockSettingsEditor: LockableEditor<EditorLockSettings>
     {
-        private string m_USSFileLocation = "Assets/Inspector Editor Lock/UI/USS/EditorLockButtonStyle.uss";
-        private bool listenToEventChanges = false;
+        protected string m_USSFileLocation = "Assets/Inspector Editor Lock/UI/USS/EditorLockButtonStyle.uss";
+        private bool m_ListenToEventChanges = false;
 
         private VisualElement m_Root;
         private VisualElement m_UnappliedChangesElem;
@@ -86,11 +86,6 @@ namespace Editorlock
         #region Event Change Callbacks
         private void ChangesRegistered(ChangeEvent<float> evt)
         {
-            //// avoid events
-            //if(evt.newValue > 1)
-            //{
-            //    return;
-            //}
 
             UnappliedChanges(evt.newValue);
         }
@@ -113,10 +108,10 @@ namespace Editorlock
         private void UnappliedChanges<T>(T changeType)
         {
 
-            if(!listenToEventChanges) 
+            if(!m_ListenToEventChanges) 
                 return;
 
-            listenToEventChanges = false;
+            m_ListenToEventChanges = false;
 
             Debug.Log($"Change event of type {typeof(T)} with value '{changeType}' registered.");
             m_UnappliedChangesElem.style.display = DisplayStyle.Flex;
@@ -127,15 +122,15 @@ namespace Editorlock
 
         private void ListenToEventChangeCallbacks(long delay) 
         {
-            listenToEventChanges = false;
-            m_Root.schedule.Execute(() => listenToEventChanges = true).ExecuteLater(delay);
+            m_ListenToEventChanges = false;
+            m_Root.schedule.Execute(() => m_ListenToEventChanges = true).ExecuteLater(delay);
         }
 
 
         private void ApplyChanges()
         {
             // Add check to see if update was successful or not
-            listenToEventChanges = false;
+            m_ListenToEventChanges = false;
             
             UpdateUSSFile();            
             m_UnappliedChangesElem.style.display = DisplayStyle.None;

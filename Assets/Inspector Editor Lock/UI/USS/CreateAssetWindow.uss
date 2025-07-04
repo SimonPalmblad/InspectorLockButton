@@ -63,8 +63,8 @@
 
 .unity-textfield-imitation__input {
     margin-bottom: 1px;
-    margin-right: 3px;
-    margin-left: 3px;
+    margin-right: 1px;
+    margin-left: 0;
     margin-top: 1px;
     justify-content: center;
     flex-grow: 0;

@@ -25,6 +25,6 @@
             </engine:VisualElement>
         </engine:VisualElement>
         <engine:VisualElement name="Divider" class="divider-styling" style="flex-grow: 0; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; background-color: rgb(116, 116, 116); height: 3px;" />
-        <engine:Button text="Create Asset" name="CreateButton" parse-escape-sequences="true" class="lockable-spacing" style="max-height: 30px; min-height: 25px; margin-bottom: 10px; font-size: 16px; -unity-font-style: bold;" />
+        <engine:Button text="Create Assets" name="CreateButton" parse-escape-sequences="true" class="lockable-spacing" style="max-height: 30px; min-height: 25px; margin-bottom: 10px; font-size: 16px; -unity-font-style: bold;" />
     </engine:VisualElement>
 </engine:UXML>

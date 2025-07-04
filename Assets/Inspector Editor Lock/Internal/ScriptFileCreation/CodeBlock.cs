@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Text;
-using System.Xml.Serialization;
 
 namespace ScriptFileCreation
 {
@@ -21,9 +20,10 @@ namespace ScriptFileCreation
         public CodeBlock(CodeLine content) : this(new List<CodeLine>() { content })
         {
         }
-        
-        private List<CodeLine> m_Attributes;
-        private List<CodeLine> m_Content;
+
+        protected List<CodeLine> m_Attributes;
+        protected List<CodeLine> m_Content;
+
         protected ICodeHierarchy m_Parent;
         protected ICodeHierarchy m_CodeBody;
 
@@ -44,8 +44,10 @@ namespace ScriptFileCreation
         /// Traverses up the hierarchy to return the <see cref="ICodeHierarchy"/> Root object. Return this <see cref="ICodeHierarchy"/> if it's the Root.
         /// </summary>
         public virtual ICodeHierarchy Root =>
-            Parent == this ? this
-                           : Parent.Root;
+            Parent == this
+                ? this
+                : Parent.Root;
+
         /// <summary>
         /// Returns the <see cref="ICodeHierarchy"/> code body of this object. If unset, returns <see cref="CodeBlockEmpty"/>.
         /// </summary>
@@ -58,6 +60,16 @@ namespace ScriptFileCreation
         public virtual void AddContent(CodeLine content)
         {
             m_Content.Add(content);
+        }
+
+        public virtual void InsertContent(int index, CodeLine content)
+        {
+            m_Content.Insert(index, content);
+        }
+
+        public virtual void AddAttribute(CodeLine content)
+        {
+            m_Attributes.Add(content);
         }
 
         /// <summary>
@@ -75,11 +87,6 @@ namespace ScriptFileCreation
             m_Content[contentIndex] = new CodeLine(m_Content[contentIndex] + appendText);
         }
 
-        public virtual void AddAttribute(CodeLine content)
-        {
-            m_Attributes.Add(content);
-        }
-
         /// <summary>
         /// Adds a <see cref="CodeBlock"/> child to this <see cref="CodeBlock"/>'s hierarchy.
         /// </summary>
@@ -89,6 +96,12 @@ namespace ScriptFileCreation
             this.m_CodeBody = scriptBody;
             scriptBody.IndentationAmount = this.IndentationAmount + 1;
             scriptBody.m_Parent = this;
+        }
+
+        public string EmptyCodebody()
+        {
+            var indentation = StringHelpers.LineIndentation(IndentationAmount);
+            return indentation + "{" + "\n" + indentation + "}";
         }
 
         public override string ToString()
@@ -101,6 +114,11 @@ namespace ScriptFileCreation
             var indentation = StringHelpers.LineIndentation(IndentationAmount);
             var result = new StringBuilder();
 
+            foreach (var attribute in m_Attributes)
+            {
+                result.AppendLine($"{indentation}{attribute.ToString()}");
+            }
+
             foreach (var codeLine in m_Content)
             {
                 result.AppendLine($"{indentation}{codeLine.ToString()}");
@@ -112,6 +130,7 @@ namespace ScriptFileCreation
                 result.AppendLine($"{m_CodeBody?.ToString()}");
                 result.Append($"{indentation}{m_BodyEnd}");
             }
+
             return result.ToString();
         }
 
