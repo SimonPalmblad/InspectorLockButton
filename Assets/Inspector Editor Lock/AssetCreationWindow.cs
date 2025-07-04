@@ -155,12 +155,9 @@ namespace EditorLock
 
 
             // If not using individual creation
-            //CreateLockableObject.CreateLockableAsset(PlaceholderIfEmpty(m_AssetNameField));
-
-            //CreateLockableObject.CreateLockableScript(PlaceholderIfEmpty(scriptField), m_ScriptFolderPathSelection.PathFull);
-
-            //CreateLockableObject.CreateLockableEditorScript(PlaceholderIfEmpty(editorField), m_EditorFolderPathSelection.PathFull);
-
+            CreateLockableObject.CreateLockableAsset(PlaceholderIfEmpty(m_AssetNameField));
+            CreateLockableObject.CreateLockableScript(PlaceholderIfEmpty(scriptField), m_ScriptFolderPathElem.PathFull);
+            CreateLockableObject.CreateLockableEditorScript(PlaceholderIfEmpty(editorField), m_EditorFolderPathElem.PathFull);
             CreateLockableObject.CreateLockableUXMLDoc(PlaceholderIfEmpty(uxmlField), m_UXMLFolderPathElem.PathFull);
         }
 

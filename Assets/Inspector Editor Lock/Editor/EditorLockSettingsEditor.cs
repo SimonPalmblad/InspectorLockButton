@@ -1,11 +1,8 @@
 using UnityEngine;
 using UnityEditor;
 using EditorLock;
-using UnityEngine.UIElements;
-using System;
-using System.IO;
-using PlasticPipe.PlasticProtocol.Messages;
 using EditorLockUtilies;
+using UnityEngine.UIElements;
 
 namespace Editorlock
 {

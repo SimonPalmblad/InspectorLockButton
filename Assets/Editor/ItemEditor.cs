@@ -11,8 +11,6 @@ using EditorLockUtilies;
 [CustomEditor(typeof(Item))]
 public class ItemEditor : LockableEditor<Item>
 {
-    //public VisualTreeAsset VisualTree;
-
     private SerializedProperty m_InventoryIconProp;
     private SerializedProperty m_ItemNameProp;
     

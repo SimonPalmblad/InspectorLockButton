@@ -4,10 +4,10 @@ using System.Text;
 using System;
 using System.Linq;
 using System.IO;
+using ScriptFileCreation;
 
 namespace EditorLock
 {
-
     public class CreateLockableObject : Editor
     {
         public static string AssetFolder = "Assets";
@@ -25,18 +25,10 @@ namespace EditorLock
 
         public static string FileEnding = ".cs";
 
-        public static void CreateScript(string attributes, string fileName, string content, string directory, string inheritance = "MonoBehaviour")
+        public static void CreateScript(string directory, string fileName, ScriptBuilder content)
         {
-            // Sanitize name
-            fileName = fileName.Replace(" ", string.Empty);
-
-            if (!fileName.EndsWith(".cs"))
-            {
-                fileName += FileEnding;
-            }
 
             string path = string.Join("/", directory, fileName);
-            //Directory.CreateDirectory(Path.GetDirectoryName(path));
 
             if (System.IO.File.Exists(path))
             {
@@ -46,40 +38,37 @@ namespace EditorLock
 
             if (!AssetDatabase.IsValidFolder(directory))
             {
+                Debug.Log($"Created directory at: {directory}");
+
                 CreateDirectories(directory);
             }
 
             #region Runtime script creation
-            /*
+
             // create the script
-            using StreamWriter outfile = new StreamWriter(path);
-            outfile.WriteLine("using UnityEngine;");
-            outfile.WriteLine("");
-            outfile.WriteLine(attributes);
-            outfile.WriteLine($"public class {name} : {inheritance}");
-            outfile.WriteLine("{");
-            outfile.WriteLine($"\t{content}");
-            outfile.WriteLine("}");
-            AssetDatabase.Refresh();
-            */
+            //using StreamWriter outfile = new StreamWriter(path);
+            //outfile.Write(content.ToString());
+            //outfile.Close();
+            //AssetDatabase.Refresh();
+
             #endregion
 
 
             #region Test script creation
             // spoof creating the script
-            StringBuilder outBuilder = new StringBuilder(path);
-            outBuilder.AppendLine();
-            outBuilder.AppendLine("using UnityEngine;");
-            outBuilder.AppendLine("");
-            outBuilder.AppendLine(attributes);
-            outBuilder.AppendLine($"public class {fileName} : {inheritance}");
-            outBuilder.AppendLine("{");
-            outBuilder.AppendLine($"\t{content}");
-            outBuilder.AppendLine("}");
+            //StringBuilder outBuilder = new StringBuilder(path);
+            //outBuilder.AppendLine();
+            //outBuilder.AppendLine("using UnityEngine;");
+            //outBuilder.AppendLine("");
+            //outBuilder.AppendLine(attributes);
+            //outBuilder.AppendLine($"public class {fileName} : {inheritance}");
+            //outBuilder.AppendLine("{");
+            //outBuilder.AppendLine($"\t{content}");
+            //outBuilder.AppendLine("}");
 
             Debug.Log($"Created script with name '{fileName}' in path '{path}'");
-            Debug.Log($"Content of {outBuilder.ToString()}");
-            Debug.Log("");
+            Debug.Log($"Content of {content}");
+            //Debug.Log("");
 
             #endregion
 
@@ -89,31 +78,43 @@ namespace EditorLock
 
         public static void CreateLockableScript(string name, string path)
         {
-            StringBuilder content = new StringBuilder();
-            content.Append("[SerializeField]")
-                   .AppendLine()
-                   .AppendLine("\tpublic bool[] m_EditorLockStates;")
-                   .Append("\tpublic string LockablePropertyPath => nameof(m_EditorLockStates);");
+            ScriptBuilder content = new ScriptBuilder(name);
+            content.WithUsings(new string[] { "UnityEditor", "UnityEngine.UIElements", "EditorLock" })
+                   .WithNamespace("EditorLock")
+                   .WithInheritance(new string[] { "MonoBehaviour", "IEditorLockable" })
+                   .AddCodeLineAttributeField("SerializeField")
+                   .AddCodeLine("public bool[] m_EditorLockStates")
+                   .AddCodeLine("public sting LockablePropertyPath => nameof(m_EditorLockStates)");
+     
+
+            //StringBuilder content = new StringBuilder();
+            //content.Append("[SerializeField]")
+            //       .AppendLine()
+            //       .AppendLine("\tpublic bool[] m_EditorLockStates;")
+            //       .Append("\tpublic string LockablePropertyPath => nameof(m_EditorLockStates);");
 
 
-            CreateScript("", name, content.ToString(), directory: path, inheritance: "MonoBehaviour, IEditorLockable");
+            CreateScript(directory: path, fileName: name, content);
         }
 
         //[MenuItem("EditorLock/New Lockable Editor Script")]
         public static void CreateLockableEditorScript(string name, string path)
         {
-            var attributes = "[CustomEditor(typeof(TestObject))]";
-            var inheritance = "LockableEditor";
-            CreateScript(attributes, name, content: string.Empty, directory: path, inheritance);
+            ScriptBuilder content = new ScriptBuilder(name);
+            
+            content.WithUsings(new string[] { "UnityEditor", "UnityEngine", "UnityEngine.UIElements", "EditorLock" })
+                   .WithInheritance(new string[] { "UnityEditor" })
+                   .AddClassAttributeField($"CustomEditor(typeof({StringHelpers.WithoutEnding(name)}))");
+  
+
+            //var attributes = "[CustomEditor(typeof(TestObject))]";
+            //var inheritance = "LockableEditor";
+            CreateScript(directory: path, fileName: name, content);
         }
 
         //[MenuItem("EditorLock/New Lockable UXML Document")]
         public static void CreateLockableUXMLDoc(string name, string path)
         {
-            //VisualTreeAsset visualTree = new VisualTreeAsset();
-            //var visualTree = ScriptableObject.CreateInstance(typeof(VisualTreeAsset));
-            //var folderDirectory = "Assets/" + UXMLFolder;
-
             string folderDirectory = path;
 
             if (System.IO.File.Exists(path + "/" + name))
@@ -128,11 +129,8 @@ namespace EditorLock
             if (!AssetDatabase.IsValidFolder(folderDirectory))
             {
                 folderDirectory = CreateDirectories(folderDirectory);
-                //Debug.Log($"New folder directory created at: '{folderDirectory}'");
-            }
 
-            //string guid = AssetDatabase.CreateFolder($"Assets/{UIFolder}", "UXML");
-            //folderDirectory = AssetDatabase.GUIDToAssetPath(guid);  
+            }
 
             Debug.Log($"Created UXML Asset in: '{folderDirectory}/{name}'");
             Debug.Log("");
@@ -143,24 +141,6 @@ namespace EditorLock
             AssetDatabase.CopyAsset("Assets/Inspector Editor Lock/UI/UXML/LockableUXMLTemplate.uxml", $"{folderDirectory}/{name}.uxml");
             AssetDatabase.Refresh();
 
-            /*
-            // Create folder if it doesn't exist
-            if (!AssetDatabase.IsValidFolder(folderDirectory))
-            {
-                Create parent folder
-                if (!AssetDatabase.IsValidFolder("Assets/Scripts/UI"))
-                {
-                    AssetDatabase.CreateFolder("Assets/Scripts", "UI");
-                }
-
-                string guid = AssetDatabase.CreateFolder($"Assets/{UIFolder}", "UXML");
-                folderDirectory = AssetDatabase.GUIDToAssetPath(guid);
-                Debug.Log($"New folder directory {folderDirectory}");
-            }
-                AssetDatabase.CopyAsset("Assets/Inspector Editor Lock/UI/UXML/LockableUXMLTemplate.uxml", "Assets/Scripts/UI/UXML/CopiedTemplate.uxml");
-                AssetDatabase.Refresh();
-
-            */
             #endregion
         }
 
@@ -173,13 +153,7 @@ namespace EditorLock
 
         public static void CreateLockableAsset(string name)
         {
-
-            //Test
-            Debug.Log($"Created GameObject with name: '{name}' ");
-            Debug.Log("");
-
-            //Runtime
-            //var asset = ObjectFactory.CreateGameObject(name);
+            var asset = ObjectFactory.CreateGameObject(name);
         }
 
         /// ⚠ WARNING ⚠ This doubles the root folder for every path creation
