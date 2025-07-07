@@ -1,5 +1,5 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <Style src="project://database/Assets/Inspector%20Editor%20Lock/UI/USS/CreateAssetWindow.uss?fileID=7433441132597879392&amp;guid=df823d17dd4001a4e9ecdd1afad93e3b&amp;type=3#CreateAssetWindow" />
+    <Style src="project://database/Assets/Inspector%20Lock%20Button/UI/USS/CreateAssetWindow.uss?fileID=7433441132597879392&amp;guid=df823d17dd4001a4e9ecdd1afad93e3b&amp;type=3#CreateAssetWindow" />
     <engine:VisualElement name="MasterContainer" class="lockable-spacing" style="flex-grow: 0; height: 350px; justify-content: space-between; align-items: stretch; flex-shrink: 0;">
         <EditorLock.FolderPathSelection name="RootFolderPath" enabled="false" default-path="Scripts" label="Root Folder Path" label-text="Root Folder Path" prefix="Assets/" description="Root Path" />
         <engine:VisualElement name="Divider" class="divider-styling" style="flex-grow: 0; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; background-color: rgb(116, 116, 116); height: 3px;" />
@@ -20,7 +20,7 @@
                 <EditorLock.FolderPathSelection name="ScriptPathSelection" enabled="false" default-path="Scripts" prefix="Assets/" style="display: flex;" />
                 <engine:TextField label="Editor Script Name" placeholder-text="NewLockableObjectEditor.cs" name="EditorName" enabled="false" class="lockable-spacing-internal" />
                 <EditorLock.FolderPathSelection name="EditorPathSelection" enabled="false" default-path="Scripts/Editor" prefix="Assets/" style="display: flex;" />
-                <engine:TextField label="UXML Name" placeholder-text="NewLockableObject.uxml" name="UXMLName" enabled="false" class="lockable-spacing-internal" />
+                <engine:TextField label="UXML Name" placeholder-text="NewLockableObject_uxml.uxml" name="UXMLName" enabled="false" class="lockable-spacing-internal" />
                 <EditorLock.FolderPathSelection name="UXMLPathSelection" enabled="false" default-path="Scripts/UI/UXML" prefix="Assets/" style="display: flex;" />
             </engine:VisualElement>
         </engine:VisualElement>

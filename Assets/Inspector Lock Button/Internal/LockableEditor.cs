@@ -9,9 +9,9 @@ namespace EditorLock
     public abstract class LockableEditor<T> : Editor where T : UnityEngine.Object
     {
         public VisualTreeAsset VisualTree = null;
-        private SerializedProperty m_EditorLockedProps;
+        protected SerializedProperty m_EditorLockedProps;
 
-        protected virtual VisualTreeAsset VisualTreePath => AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Inspector Editor Lock/UI/UXML/LockableUXMLTemplate.uxml");
+        protected virtual VisualTreeAsset VisualTreePath => AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Inspector Lock Button/UI/UXML/LockableUXMLTemplate.uxml");
         protected virtual VisualTreeAsset GetVisualTree => VisualTree == null ? VisualTreePath
                                                                               : VisualTree;
 

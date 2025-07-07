@@ -1,6 +1,6 @@
 {
-    "name": "editorlock",
-    "rootNamespace": "editorlock",
+    "name": "asemdef_editorlock",
+    "rootNamespace": "EditorLock",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

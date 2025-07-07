@@ -14,19 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DefaultAssetPath: Scripts
   UnlockedColor: {r: 0.29, g: 0.29, b: 0.29, a: 1}
-  LockedColor: {r: 0.81886786, g: 0.45948926, b: 0.1467781, a: 1}
+  LockedColor: {r: 0.82, g: 0.46, b: 0.14, a: 1}
   BorderWidth: 2
   LockedOpacity: 0.85
   DefaultLockSettings:
     Path: Scripts
     UnlockedColor: {r: 0.29, g: 0.29, b: 0.29, a: 1}
-    LockedColor: {r: 0.79, g: 0.54, b: 0.1, a: 1}
+    LockedColor: {r: 0.82, g: 0.46, b: 0.14, a: 1}
     BorderWidth: 2
     LockedOpacity: 0.85
   PreviousLockSettings:
     Path: Scripts
     UnlockedColor: {r: 0.29, g: 0.29, b: 0.29, a: 1}
-    LockedColor: {r: 0.81886786, g: 0.45948926, b: 0.1467781, a: 1}
+    LockedColor: {r: 0.82, g: 0.46, b: 0.14, a: 1}
     BorderWidth: 2
     LockedOpacity: 0.85
   m_LockableStates: 

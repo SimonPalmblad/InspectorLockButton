@@ -16,7 +16,7 @@ namespace Editorlock
         {
             Path = "Scripts",
             UnlockedColor = new Color(0.29f, 0.29f, 0.29f, 1f),
-            LockedColor = new Color(0.79f, 0.54f, 0.10f, 1f),
+            LockedColor = new Color(0.82f, 0.46f, 0.14f, 1f),
             BorderWidth = 2,
             LockedOpacity = 0.85f
         };

@@ -9,8 +9,10 @@ namespace EditorLock
 {   
     public static class LockTargetStyle
     {
-        public static StyleSheet lockedStyle = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Inspector Editor Lock/UI/USS/LockedButton.uss");
-        public static StyleSheet unlockedStyle = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Inspector Editor Lock/UI/USS/UnlockedButton.uss");
+        //public static StyleSheet lockedStyle = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Inspector Lock Button/UI/USS/LockedButton.uss");
+        public static StyleSheet lockedStyle = InternalAssetReferences.Instance.UssLockedButtonSheet;
+        //public static StyleSheet unlockedStyle = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Inspector Lock Button/UI/USS/UnlockedButton.uss");
+        public static StyleSheet unlockedStyle = InternalAssetReferences.Instance.UssUnlockedButtonSheet;
 
         public static StyleSheet GetLockedStyle => lockedStyle;
         public static StyleSheet GetUnlockedStyle => lockedStyle;
@@ -40,8 +42,8 @@ namespace EditorLock
 
         private List<string> elementsToIgnore;
 
-        private Texture2D m_LockedIcon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Inspector Editor Lock/UI/Icons/locked.png");
-        private Texture2D m_UnlockedIcon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Inspector Editor Lock/UI/Icons/unlocked.png");
+        private Texture2D m_LockedIcon = InternalAssetReferences.Instance.tex2DLockedIcon;
+        private Texture2D m_UnlockedIcon = InternalAssetReferences.Instance.text2DUnlockedIcon;
 
         public EditorLockElement()
         {
@@ -64,7 +66,7 @@ namespace EditorLock
         {
             if (visualTree == null)
             {
-                visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Inspector Editor Lock/UI/UXML/EditorLockButton.uxml");
+                visualTree = InternalAssetReferences.Instance.UxmlEditorLockButtonTree;
             }
 
             elementsToIgnore = new List<string>() { m_LockElemName, m_LockButtonName };

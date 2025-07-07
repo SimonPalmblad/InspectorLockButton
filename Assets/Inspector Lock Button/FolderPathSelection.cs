@@ -30,6 +30,7 @@ namespace EditorLock
         private string m_DescriptionName = "Description";
         private string m_PrefixName = "Prefix";
 
+
         private TextField m_TextField;
         private Label m_Description;
         private Label m_Prefix;
@@ -84,7 +85,7 @@ namespace EditorLock
         {
             if (visualTree == null)
             {
-                visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Inspector Editor Lock/UI/UXML/FolderPathSelection.uxml");
+                visualTree = InternalAssetReferences.Instance.UxmlFolderPathSelectionTree;
             }
 
             visualTree.CloneTree(this);

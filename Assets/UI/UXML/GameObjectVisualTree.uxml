@@ -30,11 +30,7 @@
                 <ui:IntegerField label="Item slots" value="42" name="ItemSlots" binding-path="m_ItemSlots" picking-mode="Ignore" readonly="true" class="element read-only" />
                 <ui:Foldout text="Show Items" view-data-key="InventoryFoldout" enabled="true" class="element foldout">
                     <ui:GroupBox name="Items">
-                        <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
-                            <ui:Instance template="ItemVisualTree" />
-                            <ui:Instance template="ItemVisualTree" />
-                            <ui:Instance template="ItemVisualTree" />
-                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-grow: 1; flex-direction: row;" />
                         <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
                             <ui:Instance template="ItemVisualTree" />
                             <ui:Instance template="ItemVisualTree" />

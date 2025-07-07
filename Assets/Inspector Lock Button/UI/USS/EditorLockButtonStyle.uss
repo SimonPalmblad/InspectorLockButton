@@ -28,7 +28,7 @@
     margin-left: 0;
     align-self: flex-end;
     align-content: center;
-    background-color: rgba(209, 117, 37, 1.00);
+    background-color: rgba(201, 138, 26, 1.00);
 }
 
 .button-styling-unlocked {
@@ -60,7 +60,7 @@
 .element-styling-locked {
     border-width: 2px;
     border-radius: 3px;
-    border-color: rgba(209, 117, 37, 1.00);
+    border-color: rgba(201, 138, 26, 1.00);
     opacity: 0.85;
 }
 

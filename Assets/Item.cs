@@ -1,6 +1,4 @@
 ﻿using EditorLock;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Create new Item")]
@@ -19,7 +17,7 @@ public class Item: ScriptableObject, IEditorLockable
     public string Description { get => m_Description;}
     public int GoldValue { get => m_GoldValue; }
 
-    [HideInInspector]
-    public bool[] LockedState;
+    [SerializeField]
+    private bool[] LockedState;
     public string LockablePropertyPath => nameof(LockedState);
 }

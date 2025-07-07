@@ -43,7 +43,6 @@ namespace EditorLock
 
         private string m_ScriptName = "ScriptName";
         private string m_EditorName = "EditorName";
-        //private string m_UXMLName = "UXMLName";
 
         private string m_RootFolderPathName = "RootFolderPath";
         private string m_ScriptFolderPathName = "ScriptPathSelection";
@@ -214,13 +213,19 @@ namespace EditorLock
 
                 elem.value = evt.newData;
 
-                if (elem.name == m_ScriptName || elem.name == m_EditorName)
+                if (elem.name == m_ScriptName)
                 {
                     elem.value += ".cs";
                     continue;
                 }
 
-                elem.value += ".uxml";
+                if(elem.name == m_EditorName)
+                {
+                    elem.value += "Editor.cs";
+                    continue;
+                }
+
+                elem.value += "_uxml.uxml";
             }
         }
 

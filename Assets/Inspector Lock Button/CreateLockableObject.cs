@@ -6,6 +6,7 @@ using System.Linq;
 using System.IO;
 using ScriptFileCreation;
 using Editorlock;
+using UnityEngine.UIElements;
 
 namespace EditorLock
 {
@@ -25,8 +26,6 @@ namespace EditorLock
         public static string EditorName = string.Empty;
 
         public static string FileEnding = ".cs";
-
-        private static readonly string UXMLTemplatePath = "Assets/Inspector Editor Lock/UI/UXML/LockableUXMLTemplate.uxml";
 
         public static void CreateScript(string directory, string fileName, ScriptBuilder content)
         {
@@ -99,7 +98,7 @@ namespace EditorLock
             Debug.Log($"Created UXML Asset in: '{path}/{name}'");
             Debug.Log("");
     
-            AssetDatabase.CopyAsset(UXMLTemplatePath, $"{path}/{name}");
+            AssetDatabase.CopyAsset(InternalAssetReferences.Instance.uxmlLockableObjectTemplatePath, $"{path}/{name}");
             AssetDatabase.Refresh();
         }
 

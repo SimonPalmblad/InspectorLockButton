@@ -9,7 +9,7 @@ namespace Editorlock
     [CustomEditor( typeof(EditorLockSettings) )]
     public class EditorLockSettingsEditor: LockableEditor<EditorLockSettings>
     {
-        protected string m_USSFileLocation = "Assets/Inspector Editor Lock/UI/USS/EditorLockButtonStyle.uss";
+        protected string m_USSFileLocation = InternalAssetReferences.Instance.ussEditorLockButtonPath;
         private bool m_ListenToEventChanges = false;
 
         private VisualElement m_Root;
