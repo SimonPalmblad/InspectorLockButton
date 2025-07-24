@@ -1,0 +1,26 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Plugins/Inspector%20Lock%20Button/UI/USS/CreateAssetWindow.uss?fileID=7433441132597879392&amp;guid=df823d17dd4001a4e9ecdd1afad93e3b&amp;type=3#CreateAssetWindow" />
+    <engine:VisualElement name="MasterContainer" class="lockable-spacing" style="flex-grow: 0; height: 350px; justify-content: space-between; align-items: stretch; flex-shrink: 0;">
+        <InspectorLock.FolderPathSelection name="RootFolderPath" enabled="true" default-path="Scripts" label="Root Folder Path" label-text="Root Folder Path" prefix="Assets/" description="Root Path" tooltip="Default path can be set in Editor Lock Settings." />
+        <engine:VisualElement name="Divider" class="divider-styling" style="flex-grow: 0; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; background-color: rgb(116, 116, 116); height: 3px;" />
+        <engine:Toggle label="Individual Paths" name="IndividualPathToggle" value="false" enabled="true" class="lockable-spacing-sub" style="margin-top: 2px; margin-bottom: 2px;" />
+        <engine:VisualElement name="ShareNameElem" style="flex-grow: 0; flex-direction: row;">
+            <engine:Toggle label="Share Name" value="true" name="NameToggle" class="lockable-spacing-internal" style="align-items: stretch; display: flex; -unity-text-align: middle-left;" />
+            <engine:TextField placeholder-text="NewLockableObject" name="SharedName" class="lockable-spacing-internal" style="flex-grow: 1;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="Divider" class="divider-styling" style="flex-grow: 0; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; background-color: rgb(116, 116, 116); height: 3px;" />
+        <engine:VisualElement name="TextFields" style="flex-grow: 0;">
+            <engine:VisualElement name="CopyNameTo" enabled="true" style="flex-grow: 0; height: auto;">
+                <engine:TextField label="Game Object" placeholder-text="NewLockableObject" name="GameObjectName" enabled="false" class="lockable-spacing-internal" />
+                <engine:TextField label="Script" placeholder-text="NewLockableObject.cs" name="ScriptName" enabled="false" class="lockable-spacing-internal" />
+                <InspectorLock.FolderPathSelection name="ScriptPathSelection" enabled="false" default-path="Scripts" prefix="Assets/" description="Script Path" style="display: flex;" />
+                <engine:TextField label="Editor Script" placeholder-text="NewLockableObjectEditor.cs" name="EditorName" enabled="false" class="lockable-spacing-internal" />
+                <InspectorLock.FolderPathSelection name="EditorPathSelection" enabled="false" default-path="Scripts/Editor" prefix="Assets/" description="Editor Path" style="display: flex;" />
+                <engine:TextField label="UXML" placeholder-text="NewLockableObject_uxml.uxml" name="UXMLName" enabled="false" class="lockable-spacing-internal" />
+                <InspectorLock.FolderPathSelection name="UXMLPathSelection" enabled="false" default-path="Scripts/UI/UXML" prefix="Assets/" description="UXML Path" style="display: flex;" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+        <engine:VisualElement name="Divider" class="divider-styling" style="flex-grow: 0; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; background-color: rgb(116, 116, 116); height: 3px;" />
+        <engine:Button text="Create Assets" name="CreateButton" parse-escape-sequences="true" class="lockable-spacing" style="max-height: 30px; min-height: 25px; margin-bottom: 10px; font-size: 16px; -unity-font-style: bold;" />
+    </engine:VisualElement>
+</engine:UXML>

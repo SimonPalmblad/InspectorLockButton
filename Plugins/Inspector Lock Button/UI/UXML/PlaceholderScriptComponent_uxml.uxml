@@ -1,0 +1,9 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Plugins/Inspector%20Lock%20Button/UI/USS/InspectorLockButtonStyle.uss?fileID=7433441132597879392&amp;guid=f21b008cb8aacb3459a981fe3e15a147&amp;type=3#InspectorLockButtonStyle" />
+    <Style src="project://database/Assets/Plugins/Inspector%20Lock%20Button/UI/USS/LockSettingsStyle.uss?fileID=7433441132597879392&amp;guid=31bd9a5a0f5cb3a408ed3e445aa3ddc1&amp;type=3#LockSettingsStyle" />
+    <engine:VisualElement name="ContainerElem" style="flex-grow: 1; padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px; border-left-color: rgb(251, 235, 11); border-right-color: rgb(251, 235, 11); border-top-color: rgb(251, 235, 11); border-bottom-color: rgb(251, 235, 11); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px;">
+        <engine:Label text="TEMP_PLACEHOLDER_COMPONENT" class="lock-settings-heading" style="-unity-font-style: bold;" />
+        <engine:TextField label="Replacement name" name="ScriptName" binding-path="ReplacementName" enabled="true" password="false" style="margin-left: 4px; margin-right: 5px;" />
+        <engine:Button text="REPLACE" name="ReplaceButton" class="settings-button-styling" style="opacity: 1; flex-grow: 1;" />
+    </engine:VisualElement>
+</engine:UXML>
