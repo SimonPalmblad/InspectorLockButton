@@ -1,0 +1,21 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Inspector%20Editor%20Lock/UI/USS/LockSettingsStyle.uss?fileID=7433441132597879392&amp;guid=31bd9a5a0f5cb3a408ed3e445aa3ddc1&amp;type=3#LockSettingsStyle" />
+    <engine:Label text="⚙ Editor Lock Global settings" name="Title" style="margin-top: 8px; font-size: 16px;" />
+    <EditorLock.EditorLockElement top-margin="2" class="lock-element-styling" style="margin-left: 0; margin-right: 0; padding-left: 4px; padding-right: 4px; margin-top: 0;">
+        <engine:Label text="Styling " name="Subsection" class="lock-settings-heading" />
+        <editor:ColorField label="Unlocked Color" value="#00FFFFFF" name="UnlockedCol" binding-path="UnlockedColor" />
+        <editor:ColorField label="Locked Color" value="#00FFFFFF" name="LockedCol" binding-path="LockedColor" />
+        <engine:Slider label="Locked Opacity" value="42" high-value="1" enabled="true" fill="true" direction="Horizontal" name="LockedOpacity" binding-path="LockedOpacity" show-input-field="true" />
+        <engine:IntegerField label="Border Width" value="0" binding-path="BorderWidth" name="BorderWidth" />
+        <engine:Label text="Create Asset Option" name="Subsection" class="lock-settings-heading" />
+        <EditorLock.FolderPathSelection />
+    </EditorLock.EditorLockElement>
+    <engine:VisualElement name="UnappliedChangesElem" style="flex-grow: 1; display: none; transition-property: display; transition-duration: 0s; transition-delay: 0s; transition-timing-function: ease;">
+        <engine:Label text="You have to apply your changes for them to take effect.&#10;" emoji-fallback-support="true" name="UnappliedLabel" enabled="true" class="unapplied-settings-styling" style="-unity-text-align: upper-left; border-left-color: rgba(255, 255, 255, 0); border-right-color: rgba(255, 255, 255, 0); border-top-color: rgba(255, 255, 255, 0); border-bottom-color: rgba(255, 255, 255, 0); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; margin-top: 8px; margin-left: 4px; margin-right: 4px; font-size: 14px; transition-duration: 0.5s; display: flex; visibility: visible; transition-property: display; transition-delay: 0.2s;" />
+        <engine:VisualElement name="ChangesButtonElem" style="flex-grow: 1; flex-direction: row; flex-shrink: 1;">
+            <engine:Button text="✔ Apply" name="ApplyButton" class="settings-button-styling button-style" style="-unity-font-style: normal; flex-grow: 1; transition-property: rotate; transition-duration: 1s;" />
+            <engine:Button text="✖ Discard" name="DiscardButton" class="settings-button-styling button-style" style="-unity-font-style: normal; flex-grow: 1;" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+    <engine:Button text="↺ Reset To Default" name="ResetButton" class="settings-button-styling button-style" style="margin-top: 8px;" />
+</engine:UXML>

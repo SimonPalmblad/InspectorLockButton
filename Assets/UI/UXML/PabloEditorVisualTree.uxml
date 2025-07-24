@@ -1,0 +1,10 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:VisualElement style="flex-grow: 1; flex-direction: column;">
+        <EditorLock element-to-lock="Lockable">
+            <engine:VisualElement name="Lockable" style="flex-grow: 1;">
+                <engine:IntegerField label="Integer Field" value="42" binding-path="m_PabloLevel" />
+                <engine:TextField label="Text Field" placeholder-text="filler text" binding-path="m_MyFavoriteDog" />
+            </engine:VisualElement>
+        </EditorLock>
+    </engine:VisualElement>
+</engine:UXML>

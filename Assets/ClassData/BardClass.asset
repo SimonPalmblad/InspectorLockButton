@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: BardClass
   m_EditorClassIdentifier: 
   m_EditingLocked: 0
-  Class: 0
-  Health: 123123
+  Class: 2
+  Health: 12
   MoveSpeed: 444
   Arms: 5
   Teeth: 8

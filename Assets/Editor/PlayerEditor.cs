@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor;
-using UnityEditor.UIElements;
 using System;
+using EditorLock;
 
 [CustomEditor(typeof(Player ))]
 public class PlayerEditor : Editor
@@ -17,7 +15,7 @@ public class PlayerEditor : Editor
     public VisualTreeAsset VisualTree;
     private VisualElement m_DebugElement;
     private VisualElement m_ClassElement;
-    private EditorLock m_OptionsSlider;
+    private EditorLockElement m_OptionsSlider;
 
     private SerializedProperty m_ClassProp;
     private SerializedProperty m_SliderValueProp;
@@ -61,7 +59,7 @@ public class PlayerEditor : Editor
         m_DebugElement = root.Q<VisualElement>("DebugElement");
         m_DebugToggleLabel = root.Q<Label>("DebugArrow");
 
-        m_OptionsSlider = root.Q<EditorLock>("OptionsSlider");
+        m_OptionsSlider = root.Q<EditorLockElement>("OptionsSlider");
         //m_OptionsSlider.Init(m_SliderValueProp);
 
         ToggleElementVisibility(m_DebugElement);

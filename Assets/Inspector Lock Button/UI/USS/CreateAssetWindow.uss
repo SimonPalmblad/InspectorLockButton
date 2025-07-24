@@ -1,0 +1,93 @@
+.custom-label {
+    font-size: 20px;
+    -unity-font-style: bold;
+    color: rgb(68, 138, 255);
+}
+
+.lockable-spacing-internal {
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    margin-top: 2px;
+    min-height: 20px;
+}
+
+.lockable-spacing-sub {
+    margin-bottom: 12px;
+    margin-top: 0;
+}
+
+.unity-toggle {
+}
+
+.unity-base-field {
+}
+
+.unity-base-text-field {
+}
+
+.unity-text-field {
+}
+
+.unity-base-field {
+}
+
+.divider-styling {
+    margin-right: 2px;
+    margin-left: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.lockable-spacing {
+    margin-bottom: 0;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    min-height: auto;
+}
+
+.unity-textfield-imitation__label {
+    width: 120px;
+    padding-top: 2px;
+    padding-right: 2px;
+    padding-left: 1px;
+    padding-bottom: 0;
+    margin-right: 2px;
+}
+
+.unity-textfield-imitation__input {
+    margin-bottom: 1px;
+    margin-right: 1px;
+    margin-left: 0;
+    margin-top: 1px;
+    justify-content: center;
+    flex-grow: 0;
+    flex-shrink: 0;
+    overflow: hidden;
+    padding-top: 2px;
+    padding-right: 4px;
+    padding-bottom: 2px;
+    padding-left: 4px;
+    -unity-text-outline-color: rgba(27, 27, 27, 0);
+    -unity-text-outline-width: 0;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgb(27, 27, 27);
+    border-right-color: rgb(27, 27, 27);
+    border-top-color: rgb(27, 27, 27);
+    border-bottom-color: rgb(27, 27, 27);
+    background-color: rgb(49, 49, 49);
+    color: rgb(159, 159, 159);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
