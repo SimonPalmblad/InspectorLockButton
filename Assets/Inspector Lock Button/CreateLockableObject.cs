@@ -60,6 +60,7 @@ namespace EditorLock
                    .WithInheritance(new string[] { "MonoBehaviour", "IEditorLockable" })
                    .AddCodeLine("// Implementation of IEditorLockable interface")
                    .AddCodeLineAttributeField("SerializeField")
+                   .AddCodeLineAttributeField("HideInInspector")
                    .AddCodeLine("private bool[] m_EditorLockStates")
                    .AddCodeLine("public string LockablePropertyPath => nameof(m_EditorLockStates)");
     
