@@ -124,7 +124,6 @@ namespace InspectorLock
             // This would need a new class instead of just using bools in the LockButtonTest class
             if (serializedArrayProp.arraySize != editorLocks.Count)
             {
-                Debug.Log("Updated serialzied property size");
                 serializedArrayProp.arraySize = editorLocks.Count;
                 serializedObj.ApplyModifiedProperties();
             }

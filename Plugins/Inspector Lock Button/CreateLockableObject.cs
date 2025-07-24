@@ -83,7 +83,7 @@ namespace InspectorLock
             ScriptBuilder content = new ScriptBuilder(name);
 
             content.WithUsings(new string[] { "UnityEditor", "UnityEngine", "UnityEngine.UIElements", nameof(InspectorLock) })
-                   .WithInheritance(new string[] { $"LockableInspector<{StringHelpers.WithoutEnding(scriptName)}>" })
+                   .WithInheritance(new string[] { $"LockableInspector" })
                    .AddClassAttributeField($"CustomEditor(typeof({StringHelpers.WithoutEnding(scriptName)}))")
                    .AddCodeLine($"protected override VisualTreeAsset VisualTreePath => AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(\"{uxmlDocPath}\");");
 
