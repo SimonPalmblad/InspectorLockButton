@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace ScriptFileCreation
@@ -23,8 +24,11 @@ namespace ScriptFileCreation
         public override ICodeHierarchy Root => this;
         public override ICodeHierarchy CodeBody => this;
 
+
+        // TODO: Implement a errors and better solutions to AddContent and other methods so this default replaces itself with an initialized version.
         public override void AddContent(CodeLine content)
         {
+
         }
 
         public override void AppendToContent(int contentIndex, string appendText)

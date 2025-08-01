@@ -18,6 +18,9 @@ namespace InspectorLock
         private FolderPathSelection m_FolderSelection;
         private InspectorLockSettings m_LockSettings;
 
+        private int borderMinSize = 0;
+        private int borderMaxSize = 25;
+
         #region Serialiation
         private string m_DefaultPathPropertyName;
 
@@ -76,6 +79,8 @@ namespace InspectorLock
             m_Root.RegisterCallback<ChangeEvent<Color>>(ChangesRegistered);
             m_Root.RegisterCallback<ChangeEvent<string>>(ChangesRegistered);
 
+            var borderWidthField = m_Root.Q<IntegerField>("BorderWidth");
+            borderWidthField.RegisterValueChangedCallback(evt => { borderWidthField.value = Mathf.Clamp(evt.newValue, borderMinSize, borderMaxSize); });
 
             if (m_FolderSelection != null)
             {
@@ -101,7 +106,6 @@ namespace InspectorLock
         #region Event Change Callbacks
         private void ChangesRegistered(ChangeEvent<float> evt)
         {
-
             UnappliedChanges(evt.newValue);
         }
 
@@ -127,8 +131,6 @@ namespace InspectorLock
                 return;
 
             m_ListenToEventChanges = false;
-
-            //Debug.Log($"Change event of type {typeof(T)} with value '{changeType}' registered.");
             m_UnappliedChangesElem.style.display = DisplayStyle.Flex;
 
 

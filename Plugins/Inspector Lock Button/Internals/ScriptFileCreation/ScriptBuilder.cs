@@ -1,4 +1,6 @@
 using System.Text;
+using UnityEditor.Rendering;
+using static Codice.CM.WorkspaceServer.WorkspaceTreeDataStore;
 
 namespace ScriptFileCreation
 {
@@ -80,6 +82,29 @@ namespace ScriptFileCreation
             }
 
             m_Code.AddContent(new CodeLine($"[{attribute}]"));
+            return this;
+        }
+
+        /// <summary>
+        /// Takes a string and formats it as a C# comment. Adds the comment to the content of this <see cref="CodeBlock"/>. Does not need to be prefixed with '//' or surrounded by '/* */'.
+        /// </summary>
+        /// <param name="comment">The string comment to add.</param>
+        public ScriptBuilder AddCommentLine(string comment)
+        {
+            CodeLine result = new CodeLine(comment);
+
+            if (!comment.StartsWith("//") && (!comment.StartsWith("/*") && !comment.EndsWith("*/")))
+            {
+                result = new CodeLine(comment.Insert(0, "// "));
+            }
+
+            if (m_Code is CodeBlockEmpty)
+            {
+                m_Code = new CodeBlock(result);
+                return this;
+            }
+
+            m_Code.AddContent(result);
             return this;
         }
 

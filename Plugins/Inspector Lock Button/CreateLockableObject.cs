@@ -59,13 +59,15 @@ namespace InspectorLock
         {
             ScriptBuilder content = new ScriptBuilder(name);
             content.WithUsings(new string[] { "UnityEngine", "UnityEditor", "UnityEngine.UIElements", nameof(InspectorLock) })
-                   .WithInheritance(new string[] { "MonoBehaviour", nameof(ILockableInspector)})
-                   .AddCodeLine("// Implementation of InspectorLockable interface")
+                   .WithInheritance(new string[] { "MonoBehaviour", nameof(ILockableInspector) })
+                   .AddCommentLine("// ----- Implementation of InspectorLockable interface ----- //")
+                   .AddCommentLine("This code is required for the lockable inspector to function.")
                    .AddCodeLineAttributeField("SerializeField")
                    .AddCodeLineAttributeField("HideInInspector")
                    .AddCodeLine("private bool[] m_InspectorLockStates")
-                   .AddCodeLine("public string LockablePropertyPath => nameof(m_InspectorLockStates)");
-    
+                   .AddCodeLine("public string LockablePropertyPath => nameof(m_InspectorLockStates)")
+                   .AddCommentLine("// ----- End of interface implementation ----- //");
+
             CreateScript(directory: path, fileName: name, content);
             
             return AssetDatabase.AssetPathToGUID(MakePath(path, name));            
@@ -83,7 +85,7 @@ namespace InspectorLock
             ScriptBuilder content = new ScriptBuilder(name);
 
             content.WithUsings(new string[] { "UnityEditor", "UnityEngine", "UnityEngine.UIElements", nameof(InspectorLock) })
-                   .WithInheritance(new string[] { $"LockableInspector" })
+                   .WithInheritance(new string[] { $"LockableInspector"})
                    .AddClassAttributeField($"CustomEditor(typeof({StringHelpers.WithoutEnding(scriptName)}))")
                    .AddCodeLine($"protected override VisualTreeAsset VisualTreePath => AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(\"{uxmlDocPath}\");");
 

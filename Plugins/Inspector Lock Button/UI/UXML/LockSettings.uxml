@@ -6,7 +6,7 @@
         <editor:ColorField label="Unlocked Color" value="#00FFFFFF" name="UnlockedCol" binding-path="UnlockedColor" />
         <editor:ColorField label="Locked Color" value="#00FFFFFF" name="LockedCol" binding-path="LockedColor" />
         <engine:Slider label="Locked Opacity" value="42" high-value="1" enabled="true" fill="true" direction="Horizontal" name="LockedOpacity" binding-path="LockedOpacity" show-input-field="true" />
-        <engine:IntegerField label="Border Width" value="0" binding-path="BorderWidth" name="BorderWidth" />
+        <engine:IntegerField label="Border Width" value="0" binding-path="BorderWidth" name="BorderWidth" max-length="3" password="false" />
         <engine:Label text="Create Asset Option" name="Subsection" class="lock-settings-heading" />
         <InspectorLock.FolderPathSelection />
     </InspectorLock.InspectorLockElement>
